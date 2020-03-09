@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.15)
-project(silo)
+project(silo-core)
 
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories("include")
 
+<<<<<<< Updated upstream
 add_executable(silo src/main.cpp)
+=======
+add_executable(silo-core src/main.cpp src/value.cpp)
+>>>>>>> Stashed changes
