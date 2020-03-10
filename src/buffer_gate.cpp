@@ -7,7 +7,7 @@ void BufferGate::calculate() {
   uint64_t outputUnknown;
   uint64_t outputError;
 
-  if (outputValue == 0) // 0/1
+  if (properties.outputValue == 0) // 0/1
   {
     outputValue = inputs[0]->getValue();
     outputUnknown = inputs[0]->getUnknown();
