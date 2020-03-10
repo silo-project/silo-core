@@ -8,10 +8,10 @@ uint64_t Value::getValue() {
     return this->value;
 }
 
-uint64_t Value::getUnknown() {
-    return this->unknown;
+uint64_t Value::getHighImpedance() {
+    return this->highImpedance;
 }
 
-uint64_t Value::getError() {
-    return this->error;
+uint64_t Value::getUnknown() {
+    return this->unknown;
 }
