@@ -1,7 +1,7 @@
 #include <value.h>
 
-uint8_t Value::getSize() {
-    return this->size;
+uint8_t Value::getWidth() {
+    return this->width;
 }
 
 uint64_t Value::getValue() {
