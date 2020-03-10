@@ -9,9 +9,10 @@ using namespace std;
 
 class Sendable {
 private:
-	vector<value> outputs; // 출력들. 서로 다른 크기의 입력들이 가능하다. 
+  vector<value> outputs; // 출력들. 서로 다른 크기의 입력들이 가능하다. 
+  vector<uint8_t> outputSizes; // 출력될 크기들. 
 public:
-	vector<uint8_t> outputSizes; // 출력될 크기들. 
+  vector<uint8_t> getOutputSizes() = 0;
   vector<node *> nextNodes;
   virtual void propagate(); // 혹여나 오버라이딩이 완전히 필요 없다면 virtual을 지울 것. 
 };
@@ -19,16 +20,17 @@ public:
 
 class IReciveable {
 private:
-	vector<value> inputs; // 입력들
+  vector<value> inputs; // 입력들
+  vector<uint8_t> inputSizes;
 public:
-	vector<uint8_t> inputSizes;
-	virtual void setInputs() = 0; //setter를 이용하는 것보다 inputs를 바꿀 수 있는 더 좋은 방법이 있으면 수정할 것. 
+  vector<uint8_t> getInputSizes() = 0;
+  virtual void setInputs() = 0; //setter를 이용하는 것보다 inputs를 바꿀 수 있는 더 좋은 방법이 있으면 수정할 것. 
 };
 //이게 인터페이스여야 할까?
 
 class AbstractNode {
 private:
-	vector<setting> settings; //TODO setting이라는 구조체를 만들것
+  vector<setting> settings; //TODO setting이라는 구조체를 만들것
 public:
   virtual void calculate() = 0;
 };
