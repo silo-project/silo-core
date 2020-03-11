@@ -3,9 +3,9 @@
 void BufferGate::calculate() {
   std::vector<Value *> inputs = this->getInputs();
   std::vector<Value *> outputs;
-  uint64_t outputValue;
-  uint64_t outputUnknown;
-  uint64_t outputError;
+  uint64_t outputValue = 0;
+  uint64_t outputUnknown = 0;
+  uint64_t outputError = 0;
 
   if (properties.outputValue == 0) // 0/1
   {
