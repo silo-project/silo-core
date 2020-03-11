@@ -52,7 +52,7 @@ void IReciveable::addInput(Value *value) {
   this->previousInput.push_back(value);
 }
 
-void IReciveable::setInputs(uint8_t inputNumber, Value inputValue) {
+void IReciveable::setInput(uint8_t inputNumber, Value inputValue) {
   delete this->inputs[inputNumber];
   this->inputs[inputNumber] = &inputValue;
 }
@@ -64,7 +64,7 @@ void IReciveable::setInputs(std::vector<Value *> inputValues) {
   this->inputs = inputValues;
 }
 
-void IReciveable::setPreviousInputs(uint8_t inputNumber, Value inputValue) {
+void IReciveable::setPreviousInput(uint8_t inputNumber, Value inputValue) {
   delete this->previousInput[inputNumber];
   this->previousInput[inputNumber] = &inputValue;
 }

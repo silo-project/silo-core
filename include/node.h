@@ -40,9 +40,9 @@ public:
   std::vector<Value *> getInputs();
   std::vector<Value *> getPreviousInput();
   void addInput(Value *value);
-  void setInputs(uint8_t inputNumber, Value inputValue);
+  void setInput(uint8_t inputNumber, Value inputValue);
   void setInputs(std::vector<Value *> inputValues);
-  void setPreviousInputs(uint8_t inputNumber, Value inputValue);
+  void setPreviousInput(uint8_t inputNumber, Value inputValue);
   void setPreviousInputs(std::vector<Value *> inputValues);
   void setInputWidths(std::vector<uint8_t> inputWidthValues);
 };
