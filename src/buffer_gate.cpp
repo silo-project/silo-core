@@ -17,14 +17,14 @@ void BufferGate::calculate() {
   else if (properties.outputValue == 1) // 0/floating
   {
     outputValue = 0;
-    outputUnknown = inputs[0]->getValue() | inputs[0]->getUnknown();
+    outputUnknown = (inputs[0]->getValue()) | (inputs[0]->getUnknown());
     outputError = inputs[0]->getError();
   }
 
   else // floating/1
   {
     outputValue = inputs[0]->getValue();
-    outputUnknown = !inputs[0]->getValue() & inputs[0]->getUnknown();
+    outputUnknown = (!(inputs[0]->getValue())) & (inputs[0]->getUnknown());
     outputError = inputs[0]->getError();
   }
 

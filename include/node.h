@@ -9,14 +9,14 @@
 #ifndef NODE_H
 #define NODE_H
 
-class ISendable {
+class Sender {
 private:
   std::vector<Value *> outputs;
   std::vector<uint8_t> outputWidths;
   std::vector<ConnectionInfo> nodeConnection;
 
 public:
-  ~ISendable();
+  ~Sender();
   std::vector<Value *> getOutputs();
   std::vector<uint8_t> getOutputWidths();
   void addOutput(Value *value);
@@ -27,14 +27,14 @@ public:
   virtual void calculate() = 0;
 };
 
-class IReciveable {
+class Reciever {
 private:
   std::vector<Value *> inputs;
   std::vector<Value *> previousInput;
   std::vector<uint8_t> inputWidths;
 
 public:
-  ~IReciveable();
+  ~Reciever();
   std::vector<uint8_t> getInputWidths();
   std::vector<Value *> getInputs();
   std::vector<Value *> getPreviousInput();
@@ -57,8 +57,8 @@ public:
   virtual void nodeInit() = 0;
 };
 
-class AbstractGate : public ISendable,
-                     public IReciveable,
+class AbstractGate : public Sender,
+                     public Reciever,
                      public AbstractNode {};
 
 #endif
