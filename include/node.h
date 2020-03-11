@@ -1,13 +1,13 @@
-﻿#include "connection_info.h"
+﻿#ifndef NODE_H
+#define NODE_H
+
+#include "connection_info.h"
 #include "value.h"
 #include <cstdint>
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#ifndef NODE_H
-#define NODE_H
 
 struct SingleBit {
   bool value = 0;

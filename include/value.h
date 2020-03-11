@@ -1,7 +1,7 @@
-#include <cstdint>
-
 #ifndef VALUE_H
 #define VALUE_H
+
+#include <cstdint>
 
 class Value {
 private: 
