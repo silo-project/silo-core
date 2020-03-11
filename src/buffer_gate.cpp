@@ -37,7 +37,7 @@ void BufferGate::nodeInitialization() {
   this->setOutputWidths(outputWidth);
 
   this->addOutput(
-      new Value(this->properties.dataBits, 0, 0, 0xffffffffffffffff));
+      new Value(this->properties.dataBits, 0, 0, INT64_MAX));
   this->addInput(
-      new Value(this->properties.dataBits, 0, 0, 0xffffffffffffffff));
+      new Value(this->properties.dataBits, 0, 0, INT64_MAX));
 }

@@ -20,3 +20,7 @@ public:
 };
 
 #endif
+
+#ifndef INT64_MAX
+#define INT64_MAX 0xffffffffffffffff
+#endif
