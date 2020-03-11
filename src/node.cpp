@@ -30,7 +30,7 @@ std::vector<ConnectionInfo> ISendable::getNodeConnection() {
 }
 
 /**********IReciveable**********/
-IReciveable::~IReciveable() {
+IReceivable::~IReceivable() {
   for (int i = 0; i < this->inputs.size(); i++) {
     delete this->inputs[i];
   }
@@ -39,44 +39,44 @@ IReciveable::~IReciveable() {
   }
 }
 
-std::vector<uint8_t> IReciveable::getInputWidths() { return this->inputWidths; }
+std::vector<uint8_t> IReceivable::getInputWidths() { return this->inputWidths; }
 
-std::vector<Value *> IReciveable::getInputs() { return this->inputs; }
+std::vector<Value *> IReceivable::getInputs() { return this->inputs; }
 
-std::vector<Value *> IReciveable::getPreviousInput() {
+std::vector<Value *> IReceivable::getPreviousInput() {
   return this->previousInput;
 }
 
-void IReciveable::addInput(Value *value) {
+void IReceivable::addInput(Value *value) {
   this->inputs.push_back(value);
   this->previousInput.push_back(value);
 }
 
-void IReciveable::setInput(uint8_t inputNumber, Value inputValue) {
+void IReceivable::setInput(uint8_t inputNumber, Value inputValue) {
   delete this->inputs[inputNumber];
   this->inputs[inputNumber] = &inputValue;
 }
 
-void IReciveable::setInputs(std::vector<Value *> inputValues) {
+void IReceivable::setInputs(std::vector<Value *> inputValues) {
   for (int i = 0; i < this->inputs.size(); i++) {
     delete this->inputs[i];
   }
   this->inputs = inputValues;
 }
 
-void IReciveable::setPreviousInput(uint8_t inputNumber, Value inputValue) {
+void IReceivable::setPreviousInput(uint8_t inputNumber, Value inputValue) {
   delete this->previousInput[inputNumber];
   this->previousInput[inputNumber] = &inputValue;
 }
 
-void IReciveable::setPreviousInputs(std::vector<Value *> inputValues) {
+void IReceivable::setPreviousInputs(std::vector<Value *> inputValues) {
   for (int i = 0; i < this->previousInput.size(); i++) {
     delete this->previousInput[i];
   }
   this->previousInput = inputValues;
 }
 
-void IReciveable::setInputWidths(std::vector<uint8_t> inputWidthValues) {
+void IReceivable::setInputWidths(std::vector<uint8_t> inputWidthValues) {
   this->inputWidths = inputWidthValues;
 }
 

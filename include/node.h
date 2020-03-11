@@ -28,14 +28,14 @@ public:
   virtual void calculate() = 0;
 };
 
-class IReciveable {
+class IReceivable {
 private:
   std::vector<Value *> inputs;
   std::vector<Value *> previousInput;
   std::vector<uint8_t> inputWidths;
 
 public:
-  ~IReciveable();
+  ~IReceivable();
   std::vector<uint8_t> getInputWidths();
   std::vector<Value *> getInputs();
   std::vector<Value *> getPreviousInput();
@@ -59,7 +59,7 @@ public:
 };
 
 class AbstractGate : public ISendable,
-                     public IReciveable,
+                     public IReceivable,
                      public AbstractNode {};
 
 #endif
