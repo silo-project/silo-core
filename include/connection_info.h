@@ -1,8 +1,8 @@
-#include <cstdint>
-#include <vector>
-
 #ifndef CONNECTION_INFO
 #define CONNECTION_INFO
+
+#include <cstdint>
+#include <vector>
 
 class AbstractNode;
 
