@@ -33,12 +33,17 @@ void BufferGate::calculate() {
   this->setOutputs(outputs);
 }
 
-void BufferGate::nodeInit() {
+SILO_ERRHANDEL BufferGate::nodeInit() {
   std::unordered_map<std::string, uint8_t> gateProperties;
   std::vector<uint8_t> inputWidth;
   std::vector<uint8_t> outputWidth;
 
   gateProperties = this->getGateProperties();
+
+  if (gateProperties.find("Data Bits") == gateProperties.end() ||
+      gateProperties.find("Output Value") == gateProperties.end()) {
+        return GATE_PROPERTIES_ERROR;
+  }
 
   this->properties.dataBits = gateProperties.find("Data Bits")->second;
   this->properties.outputValue = gateProperties.find("Output Value")->second;
@@ -50,4 +55,6 @@ void BufferGate::nodeInit() {
 
   this->addOutput(new Value(this->properties.dataBits, 0, 0, INT64_MAX));
   this->addInput(new Value(this->properties.dataBits, 0, 0, INT64_MAX));
+
+  return SUCCESS;
 }

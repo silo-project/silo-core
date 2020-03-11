@@ -14,7 +14,7 @@ private:
 
 public:
   virtual void calculate();
-  virtual void nodeInit();
+  virtual SILO_ERRHANDEL nodeInit();
 };
 
 #endif

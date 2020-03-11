@@ -72,7 +72,8 @@ SingleBit Receiver::addSingleSignal(SingleBit nowValue, SingleBit newValue) {
     return result;
   }
 
-  result.error = 1; // warning
+  errorFlag = INPUT_VALUE_CONFLICT_WARNING;
+  result.error = 1;
   return result;
 }
 
@@ -124,7 +125,7 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
   return new Value(width, value, unknown, error);
 }
 
-void Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
+SILO_ERRHANDEL Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
 
   if (firstInputFlag) {
     firstInputFlag = false;
@@ -135,6 +136,11 @@ void Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
     this->inputs[inputNumber] = this->addSignal(inputs[inputNumber], inputValue,
                                                 inputValue->getWidth());
   }
+
+  SILO_ERRHANDEL warning = errorFlag;
+  errorFlag = 0;
+
+  return warning;
 }
 
 void Receiver::setInputs(std::vector<Value *> inputValues) {
