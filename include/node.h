@@ -9,33 +9,32 @@
 #ifndef NODE_H
 #define NODE_H
 
-//<TODO> 커넥션 정보 설정 함수 만들기
-
-class ISendable {
+class Sender {
 private:
   std::vector<Value *> outputs;
   std::vector<uint8_t> outputWidths;
   std::vector<ConnectionInfo> nodeConnection;
 
 public:
-  ~ISendable();
+  ~Sender();
   std::vector<Value *> getOutputs();
   std::vector<uint8_t> getOutputWidths();
   void addOutput(Value *value);
   void setOutputs(std::vector<Value *> outputValues);
   void setOutputWidths(std::vector<uint8_t>);
   std::vector<ConnectionInfo> getNodeConnection();
+  void addConnection(ConnectionInfo newConnection);
   virtual void calculate() = 0;
 };
 
-class IReceivable {
+class Receiver {
 private:
   std::vector<Value *> inputs;
   std::vector<Value *> previousInput;
   std::vector<uint8_t> inputWidths;
 
 public:
-  ~IReceivable();
+  ~Receiver();
   std::vector<uint8_t> getInputWidths();
   std::vector<Value *> getInputs();
   std::vector<Value *> getPreviousInput();
@@ -55,11 +54,11 @@ public:
   void
   gatePropertiesSetting(std::unordered_map<std::string, uint8_t> properties);
   std::unordered_map<std::string, uint8_t> getGateProperties();
-  virtual void nodeInitialization() = 0;
+  virtual void nodeInit() = 0;
 };
 
-class AbstractGate : public ISendable,
-                     public IReceivable,
+class AbstractGate : public Sender,
+                     public Receiver,
                      public AbstractNode {};
 
 #endif
