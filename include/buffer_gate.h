@@ -14,7 +14,7 @@ private:
 
 public:
   virtual void calculate();
-  virtual void nodeInitialization();
+  virtual void nodeInit();
 };
 
 #endif

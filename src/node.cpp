@@ -29,6 +29,11 @@ std::vector<ConnectionInfo> ISendable::getNodeConnection() {
   return this->nodeConnection;
 }
 
+void ISendable::addConnection(ConnectionInfo newConnection)
+{
+  this->nodeConnection.push_back(newConnection);
+}
+
 /**********IReciveable**********/
 IReciveable::~IReciveable() {
   for (int i = 0; i < this->inputs.size(); i++) {

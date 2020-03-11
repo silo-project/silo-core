@@ -9,8 +9,6 @@
 #ifndef NODE_H
 #define NODE_H
 
-//<TODO> 커넥션 정보 설정 함수 만들기
-
 class ISendable {
 private:
   std::vector<Value *> outputs;
@@ -25,6 +23,7 @@ public:
   void setOutputs(std::vector<Value *> outputValues);
   void setOutputWidths(std::vector<uint8_t>);
   std::vector<ConnectionInfo> getNodeConnection();
+  void addConnection(ConnectionInfo newConnection);
   virtual void calculate() = 0;
 };
 
@@ -55,7 +54,7 @@ public:
   void
   gatePropertiesSetting(std::unordered_map<std::string, uint8_t> properties);
   std::unordered_map<std::string, uint8_t> getGateProperties();
-  virtual void nodeInitialization() = 0;
+  virtual void nodeInit() = 0;
 };
 
 class AbstractGate : public ISendable,

@@ -14,14 +14,14 @@ void BufferGate::calculate() {
     outputError = inputs[0]->getError();
   }
 
-  //<TODO> 버퍼게이트의 floating/1과 0/floating 속성 구현하기
+
 
   outputs.push_back(
       new Value(properties.dataBits, outputValue, outputUnknown, outputError));
   this->setOutputs(outputs);
 }
 
-void BufferGate::nodeInitialization() {
+void BufferGate::nodeInit() {
   std::unordered_map<std::string, uint8_t> gateProperties;
   std::vector<uint8_t> inputWidth;
   std::vector<uint8_t> outputWidth;
@@ -36,8 +36,6 @@ void BufferGate::nodeInitialization() {
   this->setInputWidths(inputWidth);
   this->setOutputWidths(outputWidth);
 
-  this->addOutput(
-      new Value(this->properties.dataBits, 0, 0, INT64_MAX));
-  this->addInput(
-      new Value(this->properties.dataBits, 0, 0, INT64_MAX));
+  this->addOutput(new Value(this->properties.dataBits, 0, 0, INT64_MAX));
+  this->addInput(new Value(this->properties.dataBits, 0, 0, INT64_MAX));
 }
