@@ -1,7 +1,7 @@
-#ifndef ERROR_HANDEL_H
-#define ERROR_HANDEL_H
+#ifndef ERROR_HANDLING_H
+#define ERROR_HANDLING_H
 
-#define SILO_ERRHANDEL uint8_t
+#define SILO_STATUS uint8_t
 
 #define SUCCESS 0b00000000
 
@@ -12,4 +12,4 @@
 #define GATE_PROPERTIES_ERROR 0b10000000 + 2
 #define GATE_ID_ERROR 0b10000000 + 3
 
-#endif ERROR_HANDEL_H
+#endif

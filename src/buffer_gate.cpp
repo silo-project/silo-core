@@ -33,7 +33,7 @@ void BufferGate::calculate() {
   this->setOutputs(outputs);
 }
 
-SILO_ERRHANDEL BufferGate::nodeInit() {
+SILO_STATUS BufferGate::nodeInit() {
   std::unordered_map<std::string, uint8_t> gateProperties;
   std::vector<uint8_t> inputWidth;
   std::vector<uint8_t> outputWidth;

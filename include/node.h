@@ -3,7 +3,7 @@
 
 #include "connection_info.h"
 #include "value.h"
-#include "error_handel.h"
+#include "error_handling.h"
 #include <cstdint>
 #include <iostream>
 #include <string>
@@ -41,7 +41,7 @@ private:
   std::vector<uint8_t> inputWidths;
 
   bool firstInputFlag = true;
-  SILO_ERRHANDEL errorFlag = SUCCESS;
+  SILO_STATUS errorFlag = SUCCESS;
 
   SingleBit addSingleSignal(SingleBit nowValue, SingleBit newValue);
   bool getBit(uint8_t digit, uint64_t value);
@@ -54,7 +54,7 @@ public:
   std::vector<Value *> getInputs();
   std::vector<Value *> getPreviousInput();
   void addInput(Value *value);
-  SILO_ERRHANDEL setInput(uint8_t inputNumber, Value *inputValue);
+  SILO_STATUS setInput(uint8_t inputNumber, Value *inputValue);
   void setInputs(std::vector<Value *> inputValues);
   void setPreviousInput(uint8_t inputNumber, Value inputValue);
   void setPreviousInputs(std::vector<Value *> inputValues);
@@ -70,7 +70,7 @@ public:
   void
   gatePropertiesSetting(std::unordered_map<std::string, uint8_t> properties);
   std::unordered_map<std::string, uint8_t> getGateProperties();
-  virtual SILO_ERRHANDEL nodeInit() = 0;
+  virtual SILO_STATUS nodeInit() = 0;
 };
 
 class AbstractGate : public Sender, public Receiver, public AbstractNode {};

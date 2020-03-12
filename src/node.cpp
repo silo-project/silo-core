@@ -125,7 +125,7 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
   return new Value(width, value, unknown, error);
 }
 
-SILO_ERRHANDEL Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
+SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
 
   if (firstInputFlag) {
     firstInputFlag = false;
@@ -137,7 +137,7 @@ SILO_ERRHANDEL Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
                                                 inputValue->getWidth());
   }
 
-  SILO_ERRHANDEL warning = errorFlag;
+  SILO_STATUS warning = errorFlag;
   errorFlag = 0;
 
   return warning;

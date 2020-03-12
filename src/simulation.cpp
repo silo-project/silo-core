@@ -1,6 +1,6 @@
 #include "simulation.h"
 
-SILO_ERRHANDEL
+SILO_STATUS
 Simulation::addNode(uint8_t gateID,
                     std::unordered_map<std::string, uint8_t> gateProperties) {
   switch (gateID) {
