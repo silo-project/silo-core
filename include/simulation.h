@@ -1,3 +1,6 @@
+#ifndef SIMULATION_H
+#define SIMULATION_H
+
 #include "gates.h"
 #include "gate_id.h"
 #include "node.h"
@@ -8,9 +11,6 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-
-#ifndef SIMULATION_H
-#define SIMULATION_H
 
 class Simulation
 {
