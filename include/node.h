@@ -29,7 +29,7 @@ public:
   void addOutput(Value *value);
   void setOutputs(std::vector<Value *> outputValues);
   void setOutputWidths(std::vector<uint8_t>);
-  std::vector<ConnectionInfo> getNodeConnection();
+  std::vector<ConnectionInfo> getConnection();
   void addConnection(ConnectionInfo newConnection);
   virtual void calculate() = 0;
 };

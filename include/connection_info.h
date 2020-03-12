@@ -4,10 +4,10 @@
 #include <cstdint>
 #include <vector>
 
-class AbstractNode;
+class AbstractGate;
 
 struct ConnectionInfo {
-  AbstractNode *nextNode;
+  AbstractGate *nextNode;
   uint8_t nextInputPin;
 };
 

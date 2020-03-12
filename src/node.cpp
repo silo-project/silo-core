@@ -25,7 +25,7 @@ void Sender::setOutputWidths(std::vector<uint8_t> outputWidthValues) {
   this->outputWidths = outputWidthValues;
 }
 
-std::vector<ConnectionInfo> Sender::getNodeConnection() {
+std::vector<ConnectionInfo> Sender::getConnection() {
   return this->nodeConnection;
 }
 
