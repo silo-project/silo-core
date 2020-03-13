@@ -7,8 +7,8 @@
 class AbstractGate;
 
 struct ConnectionInfo {
-  AbstractGate *nextNode;
-  uint8_t nextInputPin;
+    AbstractGate *nextNode;
+    uint8_t nextInputPin;
 };
 
 #endif

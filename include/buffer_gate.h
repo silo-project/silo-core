@@ -4,17 +4,17 @@
 #include "node.h"
 
 struct BufferGateProperties {
-  uint8_t dataBits = 0;
-  uint8_t outputValue = 0;
+    uint8_t dataBits = 0;
+    uint8_t outputValue = 0;
 };
 
 class BufferGate : public AbstractGate {
 private:
-  BufferGateProperties properties;
+    BufferGateProperties properties;
 
 public:
-  virtual void calculate();
-  virtual SILO_STATUS nodeInit();
+    virtual SILO_STATUS init();
+    virtual void calculate();
 };
 
 #endif
