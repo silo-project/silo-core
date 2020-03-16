@@ -1,14 +1,13 @@
 #include "simulation.h"
 
 SILO_STATUS Simulation::addNode(uint8_t gateID, std::unordered_map<std::string, uint8_t> gateProperties) {
-    switch (gateID) {
+    switch (static_cast<GATE_ID>(gateID)) {
         case GATE_ID::BUFFER_GATE:
             this->nodeVector.push_back(new BufferGate());
             break;
 
         default:
             return GATE_ID_ERROR;
-            break;
     }
 
     nodeVector[gateID]->setGateProperties(gateProperties);
@@ -29,7 +28,7 @@ void Simulation::setNodeInputs(uint32_t nodeID, std::vector<Value *> inputs) {
     this->firstPropagation.push_back(this->nodeVector[nodeID]);
 }
 
-std::vector<Value *> Simulation::getNodeOutputs(uint32_t nodeID) {
+std::vector<Value *> Simulation::getNodeOutputs(uint32_t nodeID) const {
     return this->nodeVector[nodeID]->getOutputs();
 }
 
@@ -42,5 +41,11 @@ SILO_STATUS Simulation::autoPropagation() {
     this->deduplication(&firstPropagation);
 
     return SUCCESS;
+}
+
+void Simulation::reset() {
+}
+
+void Simulation::clear() {
 }
 

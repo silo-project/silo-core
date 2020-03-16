@@ -4,28 +4,28 @@
 
 // Sender
 Sender::~Sender() {
-    for (int i = 0; i < this->outputs.size(); i++) {
+    for (int i = 0; i < this->outputs.size(); ++i) {
         delete this->outputs[i];
     }
 }
 
-std::vector<Value *> Sender::getOutputs() {
+std::vector<Value *> Sender::getOutputs() const {
     return this->outputs;
 }
 
-std::vector<uint8_t> Sender::getOutputWidths() {
+std::vector<uint8_t> Sender::getOutputWidths() const {
     return this->outputWidths;
 }
 
-std::vector<ConnectionInfo> Sender::getConnection() {
+std::vector<ConnectionInfo> Sender::getConnection() const {
     return this->nodeConnection;
 }
 
 
 
 void Sender::addOutput(Value *value) {
-    this->outputs.push_back(value);\
-    }
+    this->outputs.push_back(value);
+}
 
 void Sender::addConnection(ConnectionInfo newConnection) {
     this->nodeConnection.push_back(newConnection);
@@ -34,7 +34,7 @@ void Sender::addConnection(ConnectionInfo newConnection) {
 
 
 void Sender::setOutputs(std::vector<Value *> outputValues) {
-    for (int i = 0; i < this->outputs.size(); i++) {
+    for (int i = 0; i < this->outputs.size(); ++i) {
         delete this->outputs[i];
     }
 
@@ -49,28 +49,28 @@ void Sender::setOutputWidths(std::vector<uint8_t> outputWidthValues) {
 
 // Receiver
 Receiver::~Receiver() {
-    for (int i = 0; i < this->inputs.size(); i++) {
+    for (int i = 0; i < this->inputs.size(); ++i) {
         delete this->inputs[i];
     }
-    for (int i = 0; i < this->previousInput.size(); i++) {
+    for (int i = 0; i < this->previousInput.size(); ++i) {
         delete this->previousInput[i];
     }
 }
 
 
-bool Receiver::getBit(uint8_t digit, uint64_t value) {
+bool Receiver::getBit(uint8_t digit, uint64_t value) const {
     return (value >> digit) & 1;
 }
 
-std::vector<Value *> Receiver::getInputs() {
+std::vector<Value *> Receiver::getInputs() const {
     return this->inputs;
 }
 
-std::vector<Value *> Receiver::getPreviousInput() {
+std::vector<Value *> Receiver::getPreviousInput() const {
     return this->previousInput;
 }
 
-std::vector<uint8_t> Receiver::getInputWidths() {
+std::vector<uint8_t> Receiver::getInputWidths() const {
     return this->inputWidths;
 }
 
@@ -121,7 +121,7 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
     uint64_t unknown = 0;
     uint64_t error = 0;
 
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < width; ++i) {
         nowSignalBit.value = this->getBit(i, nowValue);
         nowSignalBit.unknown = this->getBit(i, nowUnknown);
         nowSignalBit.error = this->getBit(i, nowError);
@@ -141,7 +141,7 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
 
 
 
-uint64_t Receiver::setBit(uint8_t digit, uint64_t value, bool setValue) {
+uint64_t Receiver::setBit(uint8_t digit, uint64_t value, bool setValue) const {
     if (setValue) {
         return value | (1 << digit);
     } else {
@@ -165,7 +165,7 @@ SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
 }
 
 void Receiver::setInputs(std::vector<Value *> inputValues) {
-    for (int i = 0; i < this->inputs.size(); i++) {
+    for (int i = 0; i < this->inputs.size(); ++i) {
         delete this->inputs[i];
     }
 
@@ -178,7 +178,7 @@ void Receiver::setPreviousInput(uint8_t inputNumber, Value inputValue) {
 }
 
 void Receiver::setPreviousInputs(std::vector<Value *> inputValues) {
-    for (int i = 0; i < this->previousInput.size(); i++) {
+    for (int i = 0; i < this->previousInput.size(); ++i) {
         delete this->previousInput[i];
     }
 
@@ -196,7 +196,7 @@ void Receiver::setFirstInputFlag() {
 
 
 // AbstractNode
-std::unordered_map<std::string, uint8_t> AbstractNode::getGateProperties() {
+std::unordered_map<std::string, uint8_t> AbstractNode::getGateProperties() const {
     return this->gateProperties;
 }
 

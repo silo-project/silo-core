@@ -1,5 +1,5 @@
-#ifndef CONNECTION_INFO
-#define CONNECTION_INFO
+#ifndef CONNECTION_INFO_H
+#define CONNECTION_INFO_H
 
 #include <cstdint>
 #include <vector>
