@@ -1,9 +1,8 @@
 #include "simulation.h"
 
-SILO_STATUS
-Simulation::addNode(uint8_t gateID, std::unordered_map<std::string, uint8_t> gateProperties) {
+SILO_STATUS Simulation::addNode(uint8_t gateID, std::unordered_map<std::string, uint8_t> gateProperties) {
     switch (gateID) {
-        case BUFFER_GATE_ID:
+        case GATE_ID::BUFFER_GATE:
             this->nodeVector.push_back(new BufferGate());
             break;
 
