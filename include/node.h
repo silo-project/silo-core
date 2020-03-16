@@ -25,9 +25,9 @@ private:
 public:
     ~Sender();
 
-    std::vector<Value *> getOutputs();
-    std::vector<uint8_t> getOutputWidths();
-    std::vector<ConnectionInfo> getConnection();
+    std::vector<Value *> getOutputs() const;
+    std::vector<uint8_t> getOutputWidths() const;
+    std::vector<ConnectionInfo> getConnection() const;
 
     void addOutput(Value *value);
     void addConnection(ConnectionInfo newConnection);
@@ -47,19 +47,19 @@ private:
     bool firstInputFlag = true;
     SILO_STATUS errorFlag = SUCCESS;
 
-    bool getBit(uint8_t digit, uint64_t value);
+    bool getBit(uint8_t digit, uint64_t value) const;
 
     SingleBit addSingleSignal(SingleBit nowValue, SingleBit newValue);
     Value *addSignal(Value *nowSignal, Value *newSignal, uint8_t width);
 
-    uint64_t setBit(uint8_t digit, uint64_t value, bool setValue);
+    uint64_t setBit(uint8_t digit, uint64_t value, bool setValue) const;
 
 public:
     ~Receiver();
 
-    std::vector<Value *> getInputs();
-    std::vector<Value *> getPreviousInput();
-    std::vector<uint8_t> getInputWidths();
+    std::vector<Value *> getInputs() const;
+    std::vector<Value *> getPreviousInput() const;
+    std::vector<uint8_t> getInputWidths() const;
 
     void addInput(Value *value);
 
@@ -76,7 +76,7 @@ private:
     std::unordered_map<std::string, uint8_t> gateProperties;
 
 public:
-    std::unordered_map<std::string, uint8_t> getGateProperties();
+    std::unordered_map<std::string, uint8_t> getGateProperties() const;
 
     void setGateProperties(std::unordered_map<std::string, uint8_t> properties);
 

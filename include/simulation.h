@@ -22,7 +22,7 @@ private:
     void deduplication(std::vector<AbstractGate *> *array);
 
 public:
-    std::vector<Value *> getNodeOutputs(uint32_t nodeID);
+    std::vector<Value *> getNodeOutputs(uint32_t nodeID) const;
 
 
     SILO_STATUS addNode(uint8_t gateID, std::unordered_map<std::string, uint8_t> gateProperties);
