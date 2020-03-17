@@ -1,8 +1,8 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include "gates.h"
-#include "gate_id.h"
+#include "Gate/gates.h"
+#include "Gate/gate_id.h"
 #include "node.h"
 #include "value.h"
 #include "error_handling.h"

@@ -30,10 +30,10 @@ public:
     std::vector<ConnectionInfo> getConnection() const;
 
     void addOutput(Value *value);
-    void addConnection(ConnectionInfo newConnection);
+    void addConnection(const ConnectionInfo& newConnection);
 
-    void setOutputs(std::vector<Value *> outputValues);
-    void setOutputWidths(std::vector<uint8_t>);
+    void setOutputs(const std::vector<Value *>& outputValues);
+    void setOutputWidths(const std::vector<uint8_t>& outputWidthValues);
 
     virtual void calculate() = 0;
 };
@@ -64,10 +64,10 @@ public:
     void addInput(Value *value);
 
     SILO_STATUS setInput(uint8_t inputNumber, Value *inputValue);
-    void setInputs(std::vector<Value *> inputValues);
+    void setInputs(const std::vector<Value *>& inputValues);
     void setPreviousInput(uint8_t inputNumber, Value inputValue);
-    void setPreviousInputs(std::vector<Value *> inputValues);
-    void setInputWidths(std::vector<uint8_t> inputWidthValues);
+    void setPreviousInputs(const std::vector<Value *>& inputValues);
+    void setInputWidths(const std::vector<uint8_t>& inputWidthValues);
     void setFirstInputFlag();
 };
 
@@ -78,13 +78,13 @@ private:
 public:
     std::unordered_map<std::string, uint8_t> getGateProperties() const;
 
-    void setGateProperties(std::unordered_map<std::string, uint8_t> properties);
+    void setGateProperties(const std::unordered_map<std::string, uint8_t>& properties);
 
     virtual SILO_STATUS init() = 0;
 };
 
 class AbstractGate : public Sender, public Receiver, public AbstractNode {
-
+    
 };
 
 #endif

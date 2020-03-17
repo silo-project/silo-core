@@ -1,25 +1,25 @@
 #include "value.h"
 
-uint8_t Value::getWidth() {
+inline uint8_t Value::getWidth() const {
     return this->width;
 }
 
-uint64_t Value::getValue() {
+inline uint64_t Value::getValue() const {
     return this->value;
 }
 
-uint64_t Value::getState() {
+inline uint64_t Value::getState() const {
     return this->state;
 }
 
-uint64_t Value::getLogicalValue() {
-    return this->value & !this->state;
+inline uint64_t Value::getLogicalValue() const {
+    return this->value & ~this->state;
 }
 
-uint64_t Value::getError() {
+inline uint64_t Value::getError() const {
     return this->value & this->state;
 }
 
-uint64_t Value::getUnknown() {
-    return !this->value & this->state;
+inline uint64_t Value::getUnknown() const {
+    return ~this->value & this->state;
 }

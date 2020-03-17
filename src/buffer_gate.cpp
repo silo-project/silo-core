@@ -1,4 +1,4 @@
-#include "buffer_gate.h"
+#include "Gate/buffer_gate.h"
 
 SILO_STATUS BufferGate::init() {
     std::unordered_map<std::string, uint8_t> gateProperties;

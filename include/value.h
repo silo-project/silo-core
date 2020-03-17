@@ -23,13 +23,13 @@ public:
         this->state = unknown | error;
     }
 
-    uint8_t getWidth();
-    uint64_t getValue();
-    uint64_t getState();
+    inline uint8_t getWidth() const;
+    inline uint64_t getValue() const;
+    inline uint64_t getState() const;
 
-    uint64_t getLogicalValue();
-    uint64_t getError();
-    uint64_t getUnknown();
+    inline uint64_t getLogicalValue() const;
+    inline uint64_t getError() const;
+    inline uint64_t getUnknown() const;
 };
 
 #endif

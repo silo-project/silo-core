@@ -27,13 +27,13 @@ void Sender::addOutput(Value *value) {
     this->outputs.push_back(value);
 }
 
-void Sender::addConnection(ConnectionInfo newConnection) {
+void Sender::addConnection(const ConnectionInfo& newConnection) {
     this->nodeConnection.push_back(newConnection);
 }
 
 
 
-void Sender::setOutputs(std::vector<Value *> outputValues) {
+void Sender::setOutputs(const std::vector<Value *>& outputValues) {
     for (int i = 0; i < this->outputs.size(); ++i) {
         delete this->outputs[i];
     }
@@ -41,7 +41,7 @@ void Sender::setOutputs(std::vector<Value *> outputValues) {
     this->outputs = outputValues;
 }
 
-void Sender::setOutputWidths(std::vector<uint8_t> outputWidthValues) {
+void Sender::setOutputWidths(const std::vector<uint8_t>& outputWidthValues) {
     this->outputWidths = outputWidthValues;
 }
 
@@ -164,7 +164,7 @@ SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
     return warning;
 }
 
-void Receiver::setInputs(std::vector<Value *> inputValues) {
+void Receiver::setInputs(const std::vector<Value *>& inputValues) {
     for (int i = 0; i < this->inputs.size(); ++i) {
         delete this->inputs[i];
     }
@@ -177,7 +177,7 @@ void Receiver::setPreviousInput(uint8_t inputNumber, Value inputValue) {
     this->previousInput[inputNumber] = &inputValue;
 }
 
-void Receiver::setPreviousInputs(std::vector<Value *> inputValues) {
+void Receiver::setPreviousInputs(const std::vector<Value *>& inputValues) {
     for (int i = 0; i < this->previousInput.size(); ++i) {
         delete this->previousInput[i];
     }
@@ -185,7 +185,7 @@ void Receiver::setPreviousInputs(std::vector<Value *> inputValues) {
     this->previousInput = inputValues;
 }
 
-void Receiver::setInputWidths(std::vector<uint8_t> inputWidthValues) {
+void Receiver::setInputWidths(const std::vector<uint8_t>& inputWidthValues) {
     this->inputWidths = inputWidthValues;
 }
 
@@ -200,6 +200,6 @@ std::unordered_map<std::string, uint8_t> AbstractNode::getGateProperties() const
     return this->gateProperties;
 }
 
-void AbstractNode::setGateProperties(std::unordered_map<std::string, uint8_t> properties) {
+void AbstractNode::setGateProperties(const std::unordered_map<std::string, uint8_t>& properties) {
     this->gateProperties = properties;
 }
