@@ -1,16 +1,16 @@
 #include "node.h"
 
-#ifndef BUFFER_GATE_H
-#define BUFFER_GATE_H
+#ifndef NOT_GATE_H
+#define NOT_GATE_H
 
-struct BufferGateProperties {
+struct NotGateProperties {
     uint8_t dataBits = 0;
     uint8_t outputValue = 0;
 };
 
-class BufferGate : public AbstractGate {
+class NotGate : public AbstractGate {
 private:
-    BufferGateProperties properties;
+   NotGateProperties properties;
 
 public:
     virtual SILO_STATUS init();

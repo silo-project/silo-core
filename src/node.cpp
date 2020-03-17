@@ -4,8 +4,8 @@
 
 // Sender
 Sender::~Sender() {
-    for (int i = 0; i < this->outputs.size(); ++i) {
-        delete this->outputs[i];
+    for (auto output : this->outputs) {
+        delete output;
     }
 }
 
@@ -34,8 +34,8 @@ void Sender::addConnection(const ConnectionInfo& newConnection) {
 
 
 void Sender::setOutputs(const std::vector<Value *>& outputValues) {
-    for (int i = 0; i < this->outputs.size(); ++i) {
-        delete this->outputs[i];
+    for (auto output : this->outputs) {
+        delete output;
     }
 
     this->outputs = outputValues;
@@ -49,9 +49,10 @@ void Sender::setOutputWidths(const std::vector<uint8_t>& outputWidthValues) {
 
 // Receiver
 Receiver::~Receiver() {
-    for (int i = 0; i < this->inputs.size(); ++i) {
-        delete this->inputs[i];
+    for (auto input : this->inputs) {
+        delete input;
     }
+
     for (int i = 0; i < this->previousInput.size(); ++i) {
         delete this->previousInput[i];
     }
@@ -84,13 +85,13 @@ void Receiver::addInput(Value *value) {
 SingleBit Receiver::addSingleSignal(SingleBit nowValue, SingleBit newValue) {
     SingleBit result;
 
-    result.error = nowValue.error | newValue.error;
+    result.error = nowValue.error || newValue.error;
 
     if (result.error) {
         return result;
     }
 
-    if (nowValue.unknown == 1 || ((nowValue.unknown == 0) && (nowValue.value == newValue.value))) {
+    if (nowValue.unknown || (!nowValue.unknown && (nowValue.value == newValue.value))) {
         result.value = newValue.value;
         result.unknown = nowValue.unknown || newValue.unknown;
 
@@ -110,6 +111,7 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
     uint64_t nowValue = nowSignal->getValue();
     uint64_t newValue = newSignal->getValue();
     uint64_t nowUnknown = nowSignal->getUnknown();
+
     uint64_t newUnknown = newSignal->getUnknown();
     uint64_t nowError = nowSignal->getError();
     uint64_t newError = newSignal->getError();
@@ -125,6 +127,7 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
         nowSignalBit.value = this->getBit(i, nowValue);
         nowSignalBit.unknown = this->getBit(i, nowUnknown);
         nowSignalBit.error = this->getBit(i, nowError);
+
         newSignalBit.value = this->getBit(i, newValue);
         newSignalBit.unknown = this->getBit(i, newUnknown);
         newSignalBit.error = this->getBit(i, newError);
@@ -144,7 +147,8 @@ Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
 uint64_t Receiver::setBit(uint8_t digit, uint64_t value, bool setValue) const {
     if (setValue) {
         return value | (1 << digit);
-    } else {
+    } 
+    else {
         return value & ~(1 << digit);
     }
 }
@@ -154,7 +158,8 @@ SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
         this->firstInputFlag = false;
         delete this->inputs[inputNumber];
         this->inputs[inputNumber] = inputValue;
-    } else {
+    } 
+    else {
         this->inputs[inputNumber] = this->addSignal(inputs[inputNumber], inputValue, inputValue->getWidth());
     }
 

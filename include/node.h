@@ -1,14 +1,13 @@
-﻿#ifndef NODE_H
-#define NODE_H
-
-#include "connection_info.h"
+﻿#include "connection_info.h"
 #include "value.h"
 #include "error_handling.h"
 #include <cstdint>
-#include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+#ifndef NODE_H
+#define NODE_H
 
 struct SingleBit {
     bool value = 0;
@@ -25,15 +24,15 @@ private:
 public:
     ~Sender();
 
-    std::vector<Value *> getOutputs() const;
-    std::vector<uint8_t> getOutputWidths() const;
-    std::vector<ConnectionInfo> getConnection() const;
+    inline std::vector<Value *> getOutputs() const;
+    inline std::vector<uint8_t> getOutputWidths() const;
+    inline std::vector<ConnectionInfo> getConnection() const;
 
     void addOutput(Value *value);
     void addConnection(const ConnectionInfo& newConnection);
 
-    void setOutputs(const std::vector<Value *>& outputValues);
-    void setOutputWidths(const std::vector<uint8_t>& outputWidthValues);
+    inline void setOutputs(const std::vector<Value *>& outputValues);
+    inline void setOutputWidths(const std::vector<uint8_t>& outputWidthValues);
 
     virtual void calculate() = 0;
 };
@@ -57,9 +56,9 @@ private:
 public:
     ~Receiver();
 
-    std::vector<Value *> getInputs() const;
-    std::vector<Value *> getPreviousInput() const;
-    std::vector<uint8_t> getInputWidths() const;
+    inline std::vector<Value *> getInputs() const;
+    inline std::vector<Value *> getPreviousInput() const;
+    inline std::vector<uint8_t> getInputWidths() const;
 
     void addInput(Value *value);
 

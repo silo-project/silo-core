@@ -1,8 +1,8 @@
-#ifndef CONNECTION_INFO_H
-#define CONNECTION_INFO_H
-
 #include <cstdint>
 #include <vector>
+
+#ifndef CONNECTION_INFO_H
+#define CONNECTION_INFO_H
 
 class AbstractGate;
 

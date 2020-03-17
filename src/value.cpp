@@ -1,5 +1,15 @@
 #include "value.h"
 
+Value::Value(uint8_t width, uint64_t value, uint64_t state) 
+    : width(width), value(value), state(state) {
+
+}
+
+Value::Value(uint8_t width, uint64_t value, uint64_t unknown, uint64_t error) 
+    : width(width), value(value | error), state(unknown | error) {
+
+}
+
 inline uint8_t Value::getWidth() const {
     return this->width;
 }
