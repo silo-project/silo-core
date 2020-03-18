@@ -1,13 +1,8 @@
-#include "Gate/gates.h"
-#include "Gate/gate_id.h"
 #include "node.h"
 #include "value.h"
-#include "error_handling.h"
 #include "connection_info.h"
 
 #include <cstdint>
-#include <algorithm>
-#include <iostream>
 #include <map>
 #include <vector>
 

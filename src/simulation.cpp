@@ -1,10 +1,16 @@
 #include "simulation.h"
+#include "Gate/gates.h"
+#include "error_handling.h"
+
+#include <algorithm>
 
 SILO_STATUS Simulation::addNode(uint8_t gateID, std::unordered_map<std::string, uint8_t> gateProperties) {
     switch (static_cast<GATE_ID>(gateID)) {
         case GATE_ID::BUFFER_GATE:
             this->nodeVector.push_back(new BufferGate());
             break;
+        case GATE_ID::NOT_GATE:
+            this->nodeVector.push_back(new NotGate());
 
         default:
             return GATE_ID_ERROR;
