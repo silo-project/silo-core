@@ -36,23 +36,21 @@ void BufferGate::calculate() {
     std::vector<Value *> inputs = this->getInputs();
     std::vector<Value *> outputs;
     uint64_t outputValue = 0;
-    uint64_t outputUnknown = 0;
-    uint64_t outputError = 0;
+    uint64_t outputState = 0;
 
     if (properties.outputValue == 0) /* 0/1 */ {
         outputValue = inputs[0]->getValue();
-        outputUnknown = inputs[0]->getUnknown();
-        outputError = inputs[0]->getError();
-    } else if (properties.outputValue == 1) /* 0/floating */ {
-        outputValue = 0;
-        outputUnknown = (inputs[0]->getValue()) | (inputs[0]->getUnknown());
-        outputError = inputs[0]->getError();
-    } else /* floating/1 */ {
+        outputState = inputs[0]->getState();
+    } 
+    else if (properties.outputValue == 1) /* 0/floating */ {
+        outputValue = inputs[0]->getValue() & inputs[0]->getState();
+        outputState = inputs[0]->getValue() | inputs[0]->getState();
+    } 
+    else /* floating/1 */ {
         outputValue = inputs[0]->getValue();
-        outputUnknown = (!(inputs[0]->getValue())) & (inputs[0]->getUnknown());
-        outputError = inputs[0]->getError();
+        outputState = ~inputs[0]->getValue() | inputs[0]->getState();
     }
 
-    outputs.push_back(new Value(properties.dataBits, outputValue, outputUnknown, outputError));
+    outputs.push_back(new Value(properties.dataBits, outputValue, outputState));
     this->setOutputs(outputs);
 }
