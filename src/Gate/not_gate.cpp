@@ -1,18 +1,18 @@
 #include "Gate/not_gate.h"
 
 SILO_STATUS NotGate::init() {
-    std::unordered_map<std::string, uint8_t> gateProperties;
-    std::vector<uint8_t> inputWidth;
-    std::vector<uint8_t> outputWidth;
+    std::unordered_map< std::string, uint8_t > gateProperties = this->getGateProperties();
 
-    gateProperties = this->getGateProperties();
-
-    if (gateProperties.find("Data Bits") == gateProperties.end() || gateProperties.find("Output Value") == gateProperties.end()) {
+    if (gateProperties.find("Data Bits") == gateProperties.cend() 
+        || gateProperties.find("Output Value") == gateProperties.cend()) {
         return GATE_PROPERTIES_ERROR;
     }
 
     this->properties.dataBits = gateProperties.find("Data Bits")->second;
     this->properties.outputValue = gateProperties.find("Output Value")->second;
+
+    std::vector< uint8_t > inputWidth;
+    std::vector< uint8_t > outputWidth;
 
     inputWidth.push_back(properties.dataBits);
     outputWidth.push_back(properties.dataBits);
@@ -22,7 +22,7 @@ SILO_STATUS NotGate::init() {
     Value* newOutput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
     Value* newInput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
 
-    if (newOutput == 0 || newInput == 0) {
+    if (newOutput == nullptr || newInput == nullptr) {
         return OUT_OF_MEMORY_ERROR;
     }
 
@@ -35,7 +35,6 @@ SILO_STATUS NotGate::init() {
 
 void NotGate::calculate() {
     std::vector<Value*> inputs = this->getInputs();
-    std::vector<Value*> outputs;
     uint64_t outputValue = 0;
     uint64_t outputState = 0;
 
@@ -52,6 +51,7 @@ void NotGate::calculate() {
         outputState = inputs[0]->getValue() | inputs[0]->getState();
     }
 
+    std::vector<Value*> outputs;
     outputs.push_back(new Value(properties.dataBits, outputValue, outputState));
     this->setOutputs(outputs);
 }

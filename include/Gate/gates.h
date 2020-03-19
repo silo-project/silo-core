@@ -3,6 +3,7 @@
 
 #include "Gate/buffer_gate.h"
 #include "Gate/not_gate.h"
+#include "Gate/and_gate.h"
 
 enum class GATE_ID : uint8_t
 {

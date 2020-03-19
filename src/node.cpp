@@ -9,21 +9,21 @@ Sender::~Sender() {
     }
 }
 
-std::vector<Value *> Sender::getOutputs() const {
+std::vector< Value* > Sender::getOutputs() const {
     return this->outputs;
 }
 
-std::vector<uint8_t> Sender::getOutputWidths() const {
+std::vector< uint8_t > Sender::getOutputWidths() const {
     return this->outputWidths;
 }
 
-std::vector<ConnectionInfo> Sender::getConnection() const {
+std::vector< ConnectionInfo > Sender::getConnection() const {
     return this->nodeConnection;
 }
 
 
 
-void Sender::addOutput(Value *value) {
+void Sender::addOutput(Value* value) {
     this->outputs.push_back(value);
 }
 
@@ -33,7 +33,7 @@ void Sender::addConnection(const ConnectionInfo& newConnection) {
 
 
 
-void Sender::setOutputs(const std::vector<Value *>& outputValues) {
+void Sender::setOutputs(const std::vector< Value* >& outputValues) {
     for (auto output : this->outputs) {
         delete output;
     }
@@ -41,7 +41,7 @@ void Sender::setOutputs(const std::vector<Value *>& outputValues) {
     this->outputs = outputValues;
 }
 
-void Sender::setOutputWidths(const std::vector<uint8_t>& outputWidthValues) {
+void Sender::setOutputWidths(const std::vector< uint8_t >& outputWidthValues) {
     this->outputWidths = outputWidthValues;
 }
 
@@ -53,8 +53,8 @@ Receiver::~Receiver() {
         delete input;
     }
 
-    for (int i = 0; i < this->previousInput.size(); ++i) {
-        delete this->previousInput[i];
+    for (auto previous : this->previousInput.size()) {
+        delete previous;
     }
 }
 
@@ -63,15 +63,15 @@ bool Receiver::getBit(uint8_t digit, uint64_t value) const {
     return (value >> digit) & 1;
 }
 
-std::vector<Value *> Receiver::getInputs() const {
+std::vector< Value* > Receiver::getInputs() const {
     return this->inputs;
 }
 
-std::vector<Value *> Receiver::getPreviousInput() const {
+std::vector< Value* > Receiver::getPreviousInput() const {
     return this->previousInput;
 }
 
-std::vector<uint8_t> Receiver::getInputWidths() const {
+std::vector< uint8_t > Receiver::getInputWidths() const {
     return this->inputWidths;
 }
 
@@ -104,7 +104,7 @@ SingleBit Receiver::addSingleSignal(SingleBit nowValue, SingleBit newValue) {
     return result;
 }
 
-Value *Receiver::addSignal(Value *nowSignal, Value *newSignal, uint8_t width) {
+Value* Receiver::addSignal(Value* nowSignal, Value* newSignal, uint8_t width) {
     SingleBit nowSignalBit;
     SingleBit newSignalBit;
 
@@ -169,9 +169,9 @@ SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
     return warning;
 }
 
-void Receiver::setInputs(const std::vector<Value *>& inputValues) {
-    for (int i = 0; i < this->inputs.size(); ++i) {
-        delete this->inputs[i];
+void Receiver::setInputs(const std::vector< Value* >& inputValues) {
+    for (auto input : this->inputs) {
+        delete input;
     }
 
     this->inputs = inputValues;
@@ -182,15 +182,15 @@ void Receiver::setPreviousInput(uint8_t inputNumber, Value inputValue) {
     this->previousInput[inputNumber] = &inputValue;
 }
 
-void Receiver::setPreviousInputs(const std::vector<Value *>& inputValues) {
-    for (int i = 0; i < this->previousInput.size(); ++i) {
-        delete this->previousInput[i];
+void Receiver::setPreviousInputs(const std::vector< Value* >& inputValues) {
+    for (auto input : this->previousInput) {
+        delete input;
     }
 
     this->previousInput = inputValues;
 }
 
-void Receiver::setInputWidths(const std::vector<uint8_t>& inputWidthValues) {
+void Receiver::setInputWidths(const std::vector < uint8_t >& inputWidthValues) {
     this->inputWidths = inputWidthValues;
 }
 
@@ -201,10 +201,10 @@ void Receiver::setFirstInputFlag() {
 
 
 // AbstractNode
-std::unordered_map<std::string, uint8_t> AbstractNode::getGateProperties() const {
+std::unordered_map< std::string, uint8_t > AbstractNode::getGateProperties() const {
     return this->gateProperties;
 }
 
-void AbstractNode::setGateProperties(const std::unordered_map<std::string, uint8_t>& properties) {
+void AbstractNode::setGateProperties(const std::unordered_map< std::string, uint8_t >& properties) {
     this->gateProperties = properties;
 }
