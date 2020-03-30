@@ -1,7 +1,9 @@
-#include "node.h"
-
 #ifndef NOT_GATE_H
 #define NOT_GATE_H
+
+#include "node.h"
+
+
 
 struct NotGateProperties {
     uint8_t    dataBits = 0;

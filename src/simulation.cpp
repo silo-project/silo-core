@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "simulation.h"
-#include "Gate/gates.h"
+#include "Gates/gates.h"
 #include "error_handling.h"
 
 

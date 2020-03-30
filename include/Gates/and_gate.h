@@ -1,7 +1,9 @@
-#include "node.h"
-
 #ifndef AND_GATE_H
 #define AND_GATE_H
+
+#include "node.h"
+
+
 
 struct AndGateProperties {
     uint8_t       dataBits = 0;

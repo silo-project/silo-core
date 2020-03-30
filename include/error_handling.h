@@ -1,7 +1,7 @@
-#include <cstdint>
-
 #ifndef ERROR_HANDLING_H
 #define ERROR_HANDLING_H
+
+#include <cstdint>
 
 using                                  SILO_STATUS =    uint8_t;
 

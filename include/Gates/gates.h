@@ -1,9 +1,9 @@
 #ifndef GATES_H
 #define GATES_H
 
-#include "Gate/buffer_gate.h"
-#include "Gate/not_gate.h"
-#include "Gate/and_gate.h"
+#include "Gates/buffer_gate.h"
+#include "Gates/not_gate.h"
+#include "Gates/and_gate.h"
 
 enum class GATE_ID : uint8_t
 {

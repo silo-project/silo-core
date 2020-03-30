@@ -1,6 +1,8 @@
-#include "Gate/buffer_gate.h"
+#include "Gates/not_gate.h"
 
-SILO_STATUS BufferGate::init() {
+
+
+SILO_STATUS NotGate::init() {
     std::unordered_map< std::string, uint8_t > gateProperties = this->getGateProperties();
 
     if (gateProperties.find("Data Bits") == gateProperties.cend() 
@@ -19,8 +21,8 @@ SILO_STATUS BufferGate::init() {
     this->setInputWidths(inputWidth);
     this->setOutputWidths(outputWidth);
 
-    Value *newOutput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
-    Value *newInput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
+    Value* newOutput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
+    Value* newInput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
 
     if (newOutput == nullptr || newInput == nullptr) {
         return OUT_OF_MEMORY_ERROR;
@@ -32,25 +34,26 @@ SILO_STATUS BufferGate::init() {
     return SUCCESS;
 }
 
-void BufferGate::calculate() {
-    std::vector< Value* > inputs = this->getInputs();
+
+void NotGate::calculate() {
+    std::vector<Value*> inputs = this->getInputs();
     uint64_t outputValue = 0;
     uint64_t outputState = 0;
 
     if (properties.outputValue == 0) /* 0/1 */ {
-        outputValue = inputs[0]->getValue();
+        outputValue = ~inputs[0]-> getValue() | inputs[0]->getState();
         outputState = inputs[0]->getState();
-    } 
+    }
     else if (properties.outputValue == 1) /* 0/floating */ {
-        outputValue = inputs[0]->getValue() & inputs[0]->getState();
-        outputState = inputs[0]->getValue() | inputs[0]->getState();
-    } 
-    else /* floating/1 */ {
-        outputValue = inputs[0]->getValue();
+        outputValue = inputs[0]->getState();
         outputState = ~inputs[0]->getValue() | inputs[0]->getState();
     }
+    else /* floating/1 */ {
+        outputValue = ~inputs[0]->getValue() | inputs[0]->getState();
+        outputState = inputs[0]->getValue() | inputs[0]->getState();
+    }
 
-    std::vector< Value* > outputs;
+    std::vector<Value*> outputs;
     outputs.push_back(new Value(properties.dataBits, outputValue, outputState));
     this->setOutputs(outputs);
 }
