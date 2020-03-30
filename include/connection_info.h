@@ -5,10 +5,10 @@
 
 
 
-class AbstractGate;
+class AbstractNode;
 
 struct ConnectionInfo {
-    AbstractGate* nextNode;
+    AbstractNode* nextNode;
     uint8_t nextInputPin;
 };
 
