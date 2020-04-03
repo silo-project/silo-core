@@ -13,6 +13,10 @@ SILO_STATUS Simulation::addNode(uint8_t gateID, std::unordered_map< std::string,
             break;
         case GATE_ID::NOT_GATE:
             this->nodeVector.push_back(new NotGate());
+            break;
+        case GATE_ID::AND_GATE:
+            this->nodeVector.push_back(new AndGate());
+            break;
 
         default:
             return GATE_ID_ERROR;
