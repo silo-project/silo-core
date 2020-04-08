@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories("include")
 
-add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/buffer_gate.cpp src/simulation.cpp)
+add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/Gates/buffer_gate.cpp src/simulation.cpp)
