@@ -2,11 +2,11 @@
 
 #include "simulation.h"
 #include "Gates/gates.h"
-#include "error_handling.h"
+#include "status_codes.h"
 
 
 
-SILO_STATUS Simulation::addNode(uint8_t gateID, std::unordered_map< std::string, uint8_t > gateProperties) {
+status_t Simulation::addNode(uint8_t gateID, std::unordered_map< std::string, uint8_t > gateProperties) {
     switch (static_cast< GATE_ID >(gateID)) {
         case GATE_ID::BUFFER_GATE:
             this->nodeVector.push_back(new BufferGate());
@@ -19,7 +19,7 @@ SILO_STATUS Simulation::addNode(uint8_t gateID, std::unordered_map< std::string,
             break;
 
         default:
-            return GATE_ID_ERROR;
+            return ERROR_INVALID_GATE_ID;
     }
 
     nodeVector[gateID]->setGateProperties(gateProperties);
@@ -49,7 +49,7 @@ void Simulation::deduplication(std::vector< AbstractGate* > *array) {
     array->erase(unique(array->begin(), array->end()), array->end());
 }
 
-SILO_STATUS Simulation::autoPropagation() {
+status_t Simulation::autoPropagation() {
     this->deduplication(&firstPropagation);
 
     return SUCCESS;

@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "error_handling.h"
+#include "status_codes.h"
 #include "value.h"
 
 
@@ -22,7 +22,7 @@ private:
     std::vector< uint8_t >    inputWidths;
 
     bool                 firstInputFlag =    true;
-    SILO_STATUS               errorFlag = SUCCESS;
+    status_t               errorFlag = SUCCESS;
 
 private:
     bool getBit(uint8_t digit, uint64_t value) const;
@@ -41,7 +41,7 @@ public:
 
     void addInput(Value *value);
 
-    SILO_STATUS setInput(uint8_t inputNumber, Value *inputValue);
+    status_t setInput(uint8_t inputNumber, Value *inputValue);
     void setInputs(const std::vector< Value* >& inputValues);
     void setPreviousInput(uint8_t inputNumber, Value inputValue);
     void setPreviousInputs(const std::vector< Value* >& inputValues);

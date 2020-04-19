@@ -2,12 +2,12 @@
 
 
 
-SILO_STATUS BufferGate::init() {
+status_t BufferGate::init() {
     std::unordered_map< std::string, uint8_t > gateProperties = this->getGateProperties();
 
     if (gateProperties.find("Data Bits") == gateProperties.cend() 
         || gateProperties.find("Output Value") == gateProperties.cend()) {
-        return GATE_PROPERTIES_ERROR;
+        return ERROR_INVALID_GATE_PROPERTIES;
     }
 
     this->properties.dataBits = gateProperties.find("Data Bits")->second;
@@ -25,7 +25,7 @@ SILO_STATUS BufferGate::init() {
     Value *newInput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
 
     if (newOutput == nullptr || newInput == nullptr) {
-        return OUT_OF_MEMORY_ERROR;
+        return FATAL_OUT_OF_MEMORY;
     }
 
     this->addOutput(newOutput);

@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "error_handling.h"
+#include "status_codes.h"
 #include "sender.h"
 #include "receiver.h"
 #include "value.h"
@@ -21,7 +21,7 @@ public:
 
     inline void setGateProperties(const std::unordered_map< std::string, uint8_t >& properties);
 
-    virtual SILO_STATUS init() = 0;
+    virtual status_t init() = 0;
 };
 
 class AbstractGate 

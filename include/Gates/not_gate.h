@@ -15,7 +15,7 @@ private:
    NotGateProperties properties;
 
 public:
-    virtual SILO_STATUS init();
+    virtual status_t init();
     virtual void calculate();
 };
 

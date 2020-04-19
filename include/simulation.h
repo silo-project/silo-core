@@ -21,12 +21,12 @@ private:
 public:
     std::vector< Value* > getNodeOutputs(uint32_t nodeID) const;
 
-    SILO_STATUS addNode(uint8_t gateID, std::unordered_map< std::string, uint8_t > gateProperties);
+    status_t addNode(uint8_t gateID, std::unordered_map< std::string, uint8_t > gateProperties);
     void addConnection(uint32_t outputNodeID, uint8_t outputNumber, uint32_t inputNodeID, uint8_t inputNumber);
 
     void setNodeInputs(uint32_t nodeID, std::vector< Value* > inputs);
 
-    SILO_STATUS autoPropagation();  // < TODO > autoPropagation 함수 마저 구현
+    status_t autoPropagation();  // < TODO > autoPropagation 함수 마저 구현
     void reset();
     void clear();
 };
