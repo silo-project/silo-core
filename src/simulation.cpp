@@ -22,7 +22,7 @@ status_t Simulation::addNode(uint8_t gateID, std::unordered_map< std::string, ui
             return ERROR_INVALID_GATE_ID;
     }
 
-    nodeVector[gateID]->setGateProperties(gateProperties);
+    nodeVector[gateID]->setProperties(gateProperties);
 
     return nodeVector[gateID]->init();
 }

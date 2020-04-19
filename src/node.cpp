@@ -1,11 +1,9 @@
 #include "node.h"
 
-
-
-inline std::unordered_map< std::string, uint8_t > AbstractNode::getGateProperties() const {
-    return this->gateProperties;
+std::unordered_map<std::string, uint8_t> AbstractNode::getProperties() const {
+        return this->properties;
 }
 
-inline void AbstractNode::setGateProperties(const std::unordered_map< std::string, uint8_t >& properties) {
-    this->gateProperties = properties;
+void AbstractNode::setProperties(const std::unordered_map<std::string, uint8_t>& properties) {
+    this->properties = properties;
 }

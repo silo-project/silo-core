@@ -14,19 +14,17 @@
 
 class AbstractNode {
 private:
-    std::unordered_map< std::string, uint8_t > gateProperties;
+    std::unordered_map<std::string, uint8_t> properties;
 
 public:
-    inline std::unordered_map< std::string, uint8_t > getGateProperties() const;
-
-    inline void setGateProperties(const std::unordered_map< std::string, uint8_t >& properties);
+    std::unordered_map<std::string, uint8_t> getProperties() const;
+    void setProperties(const std::unordered_map<std::string, uint8_t>& properties);
 
     virtual status_t init() = 0;
 };
 
-class AbstractGate 
-    : public Sender, 
-      public Receiver,
-      public AbstractNode { };
+class AbstractGate : public Sender, public Receiver, public AbstractNode {
+    
+};
 
 #endif

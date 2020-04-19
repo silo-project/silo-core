@@ -3,7 +3,7 @@
 
 
 status_t BufferGate::init() {
-    std::unordered_map< std::string, uint8_t > gateProperties = this->getGateProperties();
+    std::unordered_map< std::string, uint8_t > gateProperties = this->getProperties();
 
     if (gateProperties.find("Data Bits") == gateProperties.cend() 
         || gateProperties.find("Output Value") == gateProperties.cend()) {
