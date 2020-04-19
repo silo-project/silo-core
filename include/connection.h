@@ -1,5 +1,5 @@
-#ifndef CONNECTION_INFO_H
-#define CONNECTION_INFO_H
+#ifndef CONNECTION_H
+#define CONNECTION_H
 
 #include <cstdint>
 
@@ -7,7 +7,7 @@
 
 class AbstractNode;
 
-struct ConnectionInfo {
+struct Connection {
     AbstractNode* nextNode;
     uint8_t nextInputPin;
 };

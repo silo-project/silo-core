@@ -7,7 +7,7 @@
 
 #include "node.h"
 #include "value.h"
-#include "connection_info.h"
+#include "connection.h"
 
 
 

@@ -28,7 +28,7 @@ status_t Simulation::addNode(uint8_t gateID, std::unordered_map< std::string, ui
 }
 
 void Simulation::addConnection(uint32_t outputNodeID, uint8_t outputNumber, uint32_t inputNodeID, uint8_t inputNumber) {
-    ConnectionInfo newConnection;
+    Connection newConnection;
     newConnection.nextNode = this->nodeVector[inputNodeID];
     newConnection.nextInputPin = inputNumber;
 
