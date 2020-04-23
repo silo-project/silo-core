@@ -21,8 +21,8 @@ private:
     std::vector< Value* >   previousInput;
     std::vector< uint8_t >    inputWidths;
 
-    bool                 firstInputFlag =    true;
-    status_t               errorFlag = SUCCESS;
+    bool firstInputFlag = true;
+    status_t errorFlag = SUCCESS;
 
 private:
     bool getBit(uint8_t digit, uint64_t value) const;
@@ -35,9 +35,9 @@ private:
 public:
     ~Receiver();
 
-    inline std::vector< Value* > getInputs() const;
-    inline std::vector< Value* > getPreviousInput() const;
-    inline std::vector< uint8_t > getInputWidths() const;
+    std::vector< Value* > getInputs() const;
+    std::vector< Value* > getPreviousInput() const;
+    std::vector< uint8_t > getInputWidths() const;
 
     void addInput(Value *value);
 

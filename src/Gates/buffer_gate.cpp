@@ -21,8 +21,8 @@ status_t BufferGate::init() {
     this->setInputWidths(inputWidth);
     this->setOutputWidths(outputWidth);
 
-    Value *newOutput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
-    Value *newInput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
+    Value* newOutput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
+    Value* newInput = new Value(this->properties.dataBits, 0, 0, INT64_MAX);
 
     if (newOutput == nullptr || newInput == nullptr) {
         return FATAL_OUT_OF_MEMORY;

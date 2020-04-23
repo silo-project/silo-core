@@ -16,7 +16,7 @@ std::vector< uint8_t > Sender::getOutputWidths() const {
     return this->outputWidths;
 }
 
-std::vector< ConnectionInfo > Sender::getConnection() const {
+std::vector< Connection > Sender::getConnection() const {
     return this->nodeConnection;
 }
 
@@ -26,7 +26,7 @@ void Sender::addOutput(Value* value) {
     this->outputs.push_back(value);
 }
 
-void Sender::addConnection(const ConnectionInfo& newConnection) {
+void Sender::addConnection(const Connection& newConnection) {
     this->nodeConnection.push_back(newConnection);
 }
 

@@ -5,7 +5,7 @@
 
 
 
-typedef uint8_t status_t;
+using status_t = uint8_t ;
 
 constexpr status_t SUCCESS  = 0b00000000;
 

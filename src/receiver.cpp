@@ -107,7 +107,7 @@ uint64_t Receiver::setBit(uint8_t digit, uint64_t value, bool setValue) const {
     }
 }
 
-SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
+status_t Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
     if (firstInputFlag) {
         this->firstInputFlag = false;
         delete this->inputs[inputNumber];
@@ -117,7 +117,7 @@ SILO_STATUS Receiver::setInput(uint8_t inputNumber, Value *inputValue) {
         this->inputs[inputNumber] = this->addSignal(inputs[inputNumber], inputValue, inputValue->getWidth());
     }
 
-    SILO_STATUS warning = errorFlag;
+    status_t warning = errorFlag;
     errorFlag = 0;
 
     return warning;
