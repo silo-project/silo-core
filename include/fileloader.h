@@ -6,10 +6,12 @@
 #define SILO_CORE_FILELOADER_H
 
 #include <string>
-#include "../circuit.h"
+#include "tinyxml2.h"
+#include "circuit.h"
 
 namespace FileLoader {
-    Circuit* logisim(const std::string& name);
+    Circuit* logisim(const char*);
+    Circuit *logisim(tinyxml2::XMLNode*);
 }
 
 #endif //SILO_CORE_FILELOADER_H

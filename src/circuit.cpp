@@ -30,3 +30,12 @@ string Circuit::getAttribute(const string& n) {
     auto v = this->AttributeMap.find(n);
     return v == this->AttributeMap.end() ? std::string() : v->second;
 }
+
+circuitid_on_plane_t Circuit::generateCircuitIDOnPlane(circuitid_on_plane_t nextcpid) {
+    this->cpid = nextcpid;
+    nextcpid++;
+    for(auto p : this->CircuitVector) {
+        nextcpid = p->generateCircuitIDOnPlane(nextcpid);
+    }
+    return nextcpid;
+}
