@@ -2,7 +2,7 @@
 
 
 
-SILO_STATUS AndGate::init() {
+status_t AndGate::init() {
     std::unordered_map< std::string, uint8_t > gateProperties = this->getProperties();
 
     if (gateProperties.find("Data Bits") == gateProperties.cend() 

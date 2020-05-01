@@ -1,5 +1,5 @@
 #include "receiver.h"
-#include "flags.h"
+#include "status_codes.h"
 
 
 Receiver::~Receiver() {
@@ -52,7 +52,7 @@ SingleBit Receiver::addSingleSignal(SingleBit nowValue, SingleBit newValue) {
         return result;
     }
 
-    errorFlag = INPUT_VALUE_CONFLICT_WARNING;
+    errorFlag = WARNING_CONFLICTING_INPUT_VALUE;
     result.error = true;
 
     return result;
