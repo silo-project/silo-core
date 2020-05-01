@@ -34,7 +34,7 @@ string Circuit::getAttribute(const string& name) {
 circuitid_on_plane_t Circuit::generateCircuitIDOnPlane(circuitid_on_plane_t nextcpid) {
     this->cpid = nextcpid;
     nextcpid++;
-    for(auto p : this->CircuitVector) {
+    for(auto p : this->circuitVector) {
         nextcpid = p->generateCircuitIDOnPlane(nextcpid);
     }
     return nextcpid;
