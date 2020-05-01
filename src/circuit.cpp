@@ -39,3 +39,9 @@ circuitid_on_plane_t Circuit::generateCircuitIDOnPlane(circuitid_on_plane_t next
     }
     return nextcpid;
 }
+
+void Circuit::placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by) {
+    Wire* wire = static_cast<Wire *>(calloc(1, sizeof(Wire)));
+    wire->a.x = ax; wire->a.y = ay;
+    wire->b.x = bx; wire->b.y = by;
+}

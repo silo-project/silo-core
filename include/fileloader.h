@@ -10,8 +10,9 @@
 #include "circuit.h"
 
 namespace FileLoader {
-    Circuit* logisim(const char*);
-    Circuit *logisim(tinyxml2::XMLNode*);
+    Circuit* logisim(const char* file, const char* name);   // Get "name" in "file"
+    Circuit* logisim(const char* file);                     // Get MainCircuit in "file"
+    Circuit* logisim(tinyxml2::XMLNode* project, const char* name);   // Get "name" in the XML
 }
 
 #endif //SILO_CORE_FILELOADER_H
