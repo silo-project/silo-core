@@ -21,12 +21,12 @@ public:
     Pos pos;
     circuitid_t placeCircuit(Circuit*);
     Circuit* getEditableCircuit(circuitid_t);
+    void removeCircuit(circuitid_t);
     void setAttribute(const std::string&, std::string);
     std::string getAttribute(const std::string&);
 protected:
     std::vector<Circuit*> CircuitVector;
     std::map<std::string, std::string> AttributeMap;
-    std::map
 };
 
 #endif //SILO_CORE_CIRCUIT_H

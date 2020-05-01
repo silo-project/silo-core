@@ -17,6 +17,11 @@ Circuit* Circuit::getEditableCircuit(circuitid_t cid) {
     return this->CircuitVector.at(cid);
 }
 
+void Circuit::removeCircuit(circuitid_t cid) {
+    delete this->CircuitVector.at(cid);
+    this->CircuitVector.erase(CircuitVector.begin() + cid);
+}
+
 void Circuit::setAttribute(const string& n, string v) {
     this->AttributeMap[n] = std::move(v);
 }
