@@ -1,5 +1,5 @@
 #include "receiver.h"
-#include "errorflag.h"
+#include "flags.h"
 
 
 Receiver::~Receiver() {
@@ -100,10 +100,10 @@ Value* Receiver::addSignal(Value* nowSignal, Value* newSignal, uint8_t width) {
 
 uint64_t Receiver::setBit(uint8_t digit, uint64_t value, bool setValue) const {
     if (setValue) {
-        return value | (1 << digit);
+        return value | (1u << digit);
     } 
     else {
-        return value & ~(1 << digit);
+        return value & ~(1u << digit);
     }
 }
 
