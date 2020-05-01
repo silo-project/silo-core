@@ -8,22 +8,22 @@
 
 using std::string;
 
-circuitid_t Circuit::placeCircuit(Circuit* c) {
-    this->CircuitVector.push_back(c);
-    return this->CircuitVector.size();
+circuit_id Circuit::placeCircuit(Circuit* circuit) {
+    this->circuitVector.push_back(circuit);
+    return this->circuitVector.size();
 }
 
-Circuit* Circuit::getEditableCircuit(circuitid_t cid) {
-    return this->CircuitVector.at(cid);
+Circuit* Circuit::getEditableCircuit(circuit_id id) {
+    return this->circuitVector.at(id);
 }
 
-void Circuit::removeCircuit(circuitid_t cid) {
-    delete this->CircuitVector.at(cid);
-    this->CircuitVector.erase(CircuitVector.begin() + cid);
+void Circuit::removeCircuit(circuit_id id) {
+    delete this->circuitVector.at(id);
+    this->circuitVector.erase(circuitVector.begin() + id);
 }
 
-void Circuit::setAttribute(const string& n, string v) {
-    this->AttributeMap[n] = std::move(v);
+void Circuit::setAttribute(const string& name, string attr) {
+    this->attributeMap[name] = std::move(attr);
 }
 
 string Circuit::getAttribute(const string& n) {
