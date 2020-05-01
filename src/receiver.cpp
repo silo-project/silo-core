@@ -1,5 +1,5 @@
 #include "receiver.h"
-
+#include "errorflag.h"
 
 
 Receiver::~Receiver() {
@@ -7,7 +7,7 @@ Receiver::~Receiver() {
         delete input;
     }
 
-    for (auto previous : this->previousInput.size()) {
+    for (auto previous : this->previousInput) {
         delete previous;
     }
 }
@@ -53,7 +53,7 @@ SingleBit Receiver::addSingleSignal(SingleBit nowValue, SingleBit newValue) {
     }
 
     errorFlag = INPUT_VALUE_CONFLICT_WARNING;
-    result.error = 1;
+    result.error = true;
 
     return result;
 }
