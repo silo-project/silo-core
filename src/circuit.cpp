@@ -26,7 +26,7 @@ void Circuit::setAttribute(const string& name, string attr) {
     this->attributeMap[name] = std::move(attr);
 }
 
-string Circuit::getAttribute(const string& n) {
-    auto v = this->AttributeMap.find(n);
-    return v == this->AttributeMap.end() ? std::string() : v->second;
+string Circuit::getAttribute(const string& name) {
+    auto v = this->attributeMap.find(name);
+    return v == this->attributeMap.end() ? std::string() : v->second;
 }
