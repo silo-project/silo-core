@@ -8,7 +8,7 @@
 #include "fileloader.h"
 #include "tinyxml2.h"
 #include "circuit.h"
-#include "../circuitmanager.h"
+#include "circuitmanager.h"
 
 #include <iostream>
 
