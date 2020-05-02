@@ -9,6 +9,7 @@
 #include "status_codes.h"
 #include "value.h"
 #include "node.h"
+#include "executor.h"
 
 using circuit_id = int32_t;
 using circuitid_on_plane_t = int32_t;
@@ -39,7 +40,7 @@ public:
     void placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, uint8_t width);
     AbstractCircuit* getEditableAbstractCircuit(circuit_id id);
     void removeAbstractCircuit(circuit_id id);
-    std::function<void(AbstractNode*)> calculate;
+    Executor* executor = nullptr;
 };
 
 class Circuit {

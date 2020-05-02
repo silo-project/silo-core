@@ -18,5 +18,5 @@ ELSE()
     file(COPY LuaJIT-2.0.5/src/lua51.so DESTINATION cmake-build-debug)
 ENDIF()
 
-add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/circuitmanager.cpp src/FileLoader/lua.cpp)
+add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/circuitmanager.cpp src/FileLoader/lua.cpp src/executor.cpp src/executor.h)
 target_link_libraries(silo-core silo-core-gates tinyxml2 crc32)

@@ -7,5 +7,5 @@
 #include "lua.hpp"
 
 AbstractCircuit* FileLoader::luaAbstract(const char* file, const char* name) {
-
+    lua_State *L;
 }
