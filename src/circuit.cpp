@@ -3,23 +3,39 @@
 //
 
 #include "circuit.h"
+#include "value.h"
 
 #include <utility>
 
 using std::string;
 
-circuit_id Circuit::placeCircuit(Circuit* circuit) {
-    this->circuitVector.push_back(circuit);
-    return this->circuitVector.size();
+circuit_id AbstractCircuit::placeAbstractCircuit(AbstractCircuit* abstractCircuit) {
+    this->abstractCircuitVector.push_back(abstractCircuit);
+    return this->abstractCircuitVector.size();
 }
 
-Circuit* Circuit::getEditableCircuit(circuit_id id) {
-    return this->circuitVector.at(id);
+AbstractCircuit* AbstractCircuit::getEditableAbstractCircuit(circuit_id id) {
+    return this->abstractCircuitVector.at(id);
 }
 
-void Circuit::removeCircuit(circuit_id id) {
-    delete this->circuitVector.at(id);
-    this->circuitVector.erase(circuitVector.begin() + id);
+void AbstractCircuit::removeAbstractCircuit(circuit_id id) {
+    delete this->abstractCircuitVector.at(id);
+    this->abstractCircuitVector.erase(abstractCircuitVector.begin() + id);
+}
+
+void AbstractCircuit::placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, uint8_t width) {
+    AbstractWire* abstractWire = static_cast<AbstractWire *>(calloc(1, sizeof(AbstractWire)));
+    abstractWire->a.x = ax; abstractWire->a.y = ay;
+    abstractWire->b.x = bx; abstractWire->b.y = by;
+    abstractWire->width = width;
+    this->abstractWireVector.push_back(abstractWire);
+}
+
+Circuit::Circuit(AbstractCircuit* _abstractCircuit) {
+    this->abstractCircuit = _abstractCircuit;
+    this->position = abstractCircuit->position;
+    for(auto a : _abstractCircuit->abstractCircuitVector) this->circuitVector.push_back(new Circuit(a));
+    for(auto w : _abstractCircuit->abstractWireVector) this->wireValueVector.push_back(new Value(w->width, 0, 0));
 }
 
 void Circuit::setAttribute(const string& name, string attr) {
@@ -38,10 +54,4 @@ circuitid_on_plane_t Circuit::generateCircuitIDOnPlane(circuitid_on_plane_t next
         nextcpid = p->generateCircuitIDOnPlane(nextcpid);
     }
     return nextcpid;
-}
-
-void Circuit::placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by) {
-    Wire* wire = static_cast<Wire *>(calloc(1, sizeof(Wire)));
-    wire->a.x = ax; wire->a.y = ay;
-    wire->b.x = bx; wire->b.y = by;
 }
