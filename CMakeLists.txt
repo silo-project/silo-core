@@ -12,11 +12,7 @@ add_library(tinyxml2 tinyxml2-7.1.0/tinyxml2.cpp)
 add_library(silo-core-gates src/Gates/buffer_gate.cpp src/Gates/and_gate.cpp src/Gates/not_gate.cpp)
 add_library(crc32 Crc32/Crc32.cpp)
 
-IF (WIN32)
-    file(COPY LuaJIT-2.0.5/src/lua51.dll DESTINATION cmake-build-debug)
-ELSE()
-    file(COPY LuaJIT-2.0.5/src/lua51.so DESTINATION cmake-build-debug)
-ENDIF()
-
 add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/circuitmanager.cpp src/FileLoader/lua.cpp src/executor.cpp)
 target_link_libraries(silo-core silo-core-gates tinyxml2 crc32)
+
+target_link_libraries(silo-core ${CMAKE_CURRENT_SOURCE_DIR}/LuaJIT-2.0.5/src/lua51)
