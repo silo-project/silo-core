@@ -2,6 +2,8 @@
 // Created by penta on 2020-05-02.
 //
 
+#include <lua.hpp>
+
 #include "executor.h"
 
 LuaExecutor::LuaExecutor(const char* scriptfile) {
@@ -34,3 +36,5 @@ void LuaExecutor::execute(AbstractNode* abstractNode) {
 
     printf("Script returned: %.0f\n", lua_tonumber(L, -1));
 }
+
+void Executor::execute(AbstractNode *) { }

@@ -5,8 +5,9 @@
 #ifndef SILO_CORE_EXECUTOR_H
 #define SILO_CORE_EXECUTOR_H
 
+#include <lua.hpp>
+
 #include "node.h"
-#include "lua.hpp"
 
 class Executor {
 public:
