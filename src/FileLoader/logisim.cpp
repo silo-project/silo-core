@@ -103,7 +103,30 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* name)
 AbstractCircuit* FileLoader::logisimAbstract(const char* file, const char* name) {
 
     if(file[0] == '#') { // LOGISIM INTERNAL LIBRARY
-        
+        AbstractCircuitManager asman;
+        switch(file[1]) {
+            case 'W':
+                if(strcmp(file, "#Wiring")) break;
+                break;
+            case 'G':
+                if(strcmp(file, "#Gates")) break;
+                break;
+            case 'P':
+                if(strcmp(file, "#Plexers")) break;
+                break;
+            case 'A':
+                if(strcmp(file, "#Arithmetic")) break;
+                break;
+            case 'M':
+                if(strcmp(file, "#Memory")) break;
+                break;
+            case 'I':
+                if(strcmp(file, "#I/O")) break;
+                break;
+            case 'B':
+                if(strcmp(file, "#Base")) break;
+                break;
+        }
     }
 
     XMLDocument circ;
