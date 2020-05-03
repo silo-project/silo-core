@@ -45,7 +45,11 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* local
     }
 
     std::filesystem::path localpath;
-    if(localrelpath != nullptr) localpath = std::filesystem::absolute(std::filesystem::path(string(localrelpath)));
+    if(localrelpath != nullptr) {
+        std::cout << "logisim.cpp:49 " << localrelpath << std::endl;
+        localpath = std::filesystem::absolute(std::filesystem::path(string(localrelpath)));
+        std::cout << "logisim.cpp:51 " << localpath.u8string() << std::endl;
+    }
 
     for (XMLElement* libelement = project->FirstChildElement("lib"); libelement != nullptr; libelement = libelement->NextSiblingElement("lib")) {
         const char* librarypath;
@@ -65,13 +69,12 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* local
             }
         }
         if(relpath) {
-            std::filesystem::path abspath = std::filesystem::absolute(
-                    std::filesystem::relative(std::filesystem::path(string(relpath)), localpath));
+            std::filesystem::path abspath = std::filesystem::absolute(localpath.parent_path().u8string() + "/" + relpath);
             string abspathstr(abspath.u8string());
-            std::cout << "logisim.cpp:71 " << localrelpath << " " << localpath << " " << abspathstr << std::endl;
-            libraryFileMap[libelement->IntAttribute("name")] = abspathstr;
+            std::cout << "logisim.cpp:74 " << localrelpath << " " << localpath << " " << abspathstr << std::endl;
+            libraryFileMap[libelement->IntAttribute("name")] = "file#" + abspathstr;
         } else {
-            std::cout << "logisim.cpp:74 " << librarypath << " ";
+            std::cout << "logisim.cpp:77 " << librarypath << " ";
             libraryFileMap[libelement->IntAttribute("name")] = librarypath;
         }
     }
@@ -134,8 +137,6 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* local
 
             compelement->QueryStringAttribute("name", &compname);
 
-            std::cout << "logisim.cpp:92 " << compname << " " << libid << std::endl;
-
             LibraryManager libman;
             const char *libfile;
             if(libid != -1) libfile = libraryFileMap.find(libid)->second.c_str();
@@ -143,6 +144,8 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* local
             std::cout << libfile << std::endl;
 
             lc = loadAbstract(libfile, compname);
+
+            std::cout << "logisim.cpp:148 " << libfile << " " << compname << " " << lc << std::endl;
 
             tc->placeAbstractCircuit(lc, new Position{x, y});
         }
@@ -158,7 +161,7 @@ Circuit* FileLoader::logisim(XMLNode* project, const char* localfiletag, const c
 
     AbstractCircuit* as = logisimAbstract(project, localfiletag, name);
 
-    std::cout << as->abstractCircuitVector.size() << std::endl;
+    std::cout << "logisim.cpp:164 " << as->abstractCircuitVector.size() << std::endl;
 
     Circuit* tc = new Circuit(as);
 

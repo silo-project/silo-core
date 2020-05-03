@@ -15,7 +15,6 @@
 using namespace tinyxml2;
 
 AbstractCircuit* FileLoader::loadAbstract(const char* lib, const char* name) {
-    std::cout << "fileloader.cpp:18 " << lib << " " << name << std::endl;
     if(!strlen(lib)) return nullptr;
     LibraryManager lm;
 
@@ -28,7 +27,7 @@ AbstractCircuit* FileLoader::loadAbstract(const char* lib, const char* name) {
         if(doc.LoadFile(static_cast<const char*>(lib + 5)) != XML_SUCCESS) {
             std::cout << "fileloader.cpp:29 Unable to load XML " << lib + 5 << std::endl;
             return nullptr;
-        }
+        } else std::cout << "fileloader.cpp:30 XML Loaded " << lib + 5 << std::endl;
         Library* l = new Library();
         lm.registerLibrary(l, lib);
         l->registerAbstractCircuit(logisimAbstract(doc.FirstChild()->NextSibling(), lib, name), name);
@@ -38,5 +37,6 @@ AbstractCircuit* FileLoader::loadAbstract(const char* lib, const char* name) {
     } else if(memcmp(lib, "lua#", 4) == 0) {
         return luaAbstract(lib, name);
     }
+    std::cout << "fileloader.cpp:40 Unknown Tag" << std::endl;
     return nullptr;
 }

@@ -3,13 +3,6 @@
 This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
 <lib desc="#Wiring" name="0"/>
   <lib desc="#Gates" name="1"/>
-    <tool name="Text Tool">
-      <a name="text" val=""/>
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="halign" val="center"/>
-      <a name="valign" val="base"/>
-    </tool>
-  </lib>
   <lib desc="file#LogisimExampleLib.circ" name="7"/>
   <main name="main"/>
   <options>

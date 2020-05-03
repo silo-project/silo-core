@@ -100,7 +100,8 @@ LuaLibrary::LuaLibrary(const char *_luafile) {
     lua_pushcclosure(this->L, registerAbstractCircuitExecutor, 0);
     lua_setglobal(this->L, "registerAbstractCircuit");
 
-    std::cout << "library.cpp:102 " << luaL_dofile(this->L, luafile) << std::endl;
+    //std::cout << "library.cpp:102 " << luaL_dofile(this->L, luafile) << std::endl;
+    luaL_dofile(this->L, luafile);
 
     workinglib = this;
 
@@ -108,7 +109,8 @@ LuaLibrary::LuaLibrary(const char *_luafile) {
 
     lua_call(this->L, 0, 1);
 
-    std::cout << "library.cpp:110 " << lua_tointeger(this->L, -1) << std::endl;
+    //std::cout << "library.cpp:110 " << lua_tointeger(this->L, -1) << std::endl;
+    lua_tointeger(this->L, -1);
 }
 
 LuaLibrary::~LuaLibrary() {
