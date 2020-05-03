@@ -9,6 +9,21 @@
 
 #include "Crc32.h"
 
+#include "executor.h"
+
+extern "C" {
+LuaLibrary* workinglib = NULL;
+
+int registerAbstractCircuitExecutor(lua_State *L) {
+    AbstractCircuit *ac = new AbstractCircuit();
+
+    const char *luaexecutorfuncname = lua_tostring(L, 2);
+
+    ac->executor = new LuaExecutor(workinglib, luaexecutorfuncname);
+    workinglib->registerAbstractCircuit(ac, lua_tostring(L, 1));
+}
+}
+
 std::map<uint32_t, Library*>* LibraryManager::libraryMap = nullptr;
 
 LibraryManager::LibraryManager() {
@@ -71,12 +86,11 @@ LuaLibrary::LuaLibrary(const char *_luafile) {
 
     int res = luaL_dofile(this->L, luafile );
 
-    lua_register(this->L, "registerAbstractCircuitExecutor", this->registerAbstractCircuitExecutor);
+    lua_register(this->L, "registerAbstractCircuitExecutor", registerAbstractCircuitExecutor);
 
     lua_getglobal(this->L, "regAbstractCircuit" );
-    lua_pushnumber(this->L, 30 );
 
-    lua_pushnumber(this->L, 100 );
+    workinglib = this;
 
     lua_call(this->L, 2, 1 );
 

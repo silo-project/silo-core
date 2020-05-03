@@ -4,7 +4,7 @@
 #include "fileloader.h"
 
 int main(int argc, char** argv) {
-    Circuit* c = FileLoader::logisim("../src/FileLoader/LogisimExample.circ");  // TEST
+    Circuit* c = new Circuit(FileLoader::loadAbstract("../src/FileLoader/LogisimExample.circ", "main"));  // TEST
     std::cout << c->getAttribute("circuit") << "," << c->getAttribute("clabel") << "," << c->getAttribute("clabelup") << "," << c->getAttribute("clabelfont") << std::endl;
     return 0;
 }

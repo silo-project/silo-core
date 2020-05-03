@@ -8,6 +8,7 @@
 #include <lua.hpp>
 
 #include "node.h"
+#include "library.h"
 
 class Executor {
 public:
@@ -16,16 +17,13 @@ public:
 
 class LuaExecutor : public Executor {
 public:
-    LuaExecutor();
+    LuaExecutor(LuaLibrary* _library, const char* _executorname);
     ~LuaExecutor();
-    void setLuaFile(const char* _luafile);
     void execute(AbstractNode* abstractNode);
 
-public:
-    lua_State* L;
-
 protected:
-    const char* luafile;
+    const char* executorname;
+    LuaLibrary* library;
 };
 
 #endif // EXECUTOR_H

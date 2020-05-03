@@ -5,7 +5,7 @@
 #include "fileloader.h"
 #include "circuit.h"
 
-using FileLoader::luaAbstract();
+using namespace FileLoader;
 
 AbstractCircuit* FileLoader::localAbstract(const char* lib, const char* name) {
     switch (lib[1]) {

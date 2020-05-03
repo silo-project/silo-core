@@ -8,6 +8,7 @@
 #include "circuit.h"
 #include <map>
 #include <string>
+#include <lua.hpp>
 
 class Library {
 protected:
@@ -22,12 +23,11 @@ public:
 };
 
 class LuaLibrary : public Library {
-protected:
-    const char* luafile;
+public:
     lua_State* L;
 
 protected:
-    void registerAbstractCircuitExecutor(const char* circname, const char* executorname);
+    const char* luafile;
 
 public:
     LuaLibrary(const char* _luafile);

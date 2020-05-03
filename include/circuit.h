@@ -9,7 +9,8 @@
 #include "status_codes.h"
 #include "value.h"
 #include "node.h"
-#include "executor.h"
+
+class Executor;
 
 using circuit_id = int32_t;
 using circuitid_on_plane_t = int32_t;
