@@ -18,7 +18,7 @@ using namespace tinyxml2;
 using std::map;
 using std::string;
 
-AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* name) {
+AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* localfiletag, const char* name) {
 
     std::cout << "ABSTRACT " << name << std::endl; // TODO DEBUG
 
@@ -89,9 +89,13 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* name)
 
             compelement->QueryStringAttribute("name", &compname);
 
+            std::cout << "logisim.cpp:92 " << compname << " " << libid << std::endl;
 
             LibraryManager libman;
-            const char *libfile = libraryFileMap.find(libid)->second.c_str();
+            const char *libfile;
+            if(libid != -1) libfile = libraryFileMap.find(libid)->second.c_str();
+            else libfile = localfiletag;
+            std::cout << libfile << std::endl;
 
             if (!libman.hasLibrary(libfile)) libman.registerLibrary(new Library(), libfile);
 
@@ -111,12 +115,12 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* name)
     return tc;
 }
 
-Circuit* FileLoader::logisim(XMLNode* project, const char* name) {
+Circuit* FileLoader::logisim(XMLNode* project, const char* localfiletag, const char* name) {
     map<libraryid_t, string> libraryfilemap;
 
     std::cout << "REAL " << name << std::endl; // TODO DEBUG
 
-    AbstractCircuit* as = logisimAbstract(project, name);
+    AbstractCircuit* as = logisimAbstract(project, localfiletag, name);
 
     std::cout << as->abstractCircuitVector.size() << std::endl;
 

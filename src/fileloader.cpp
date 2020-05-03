@@ -21,10 +21,11 @@ AbstractCircuit* FileLoader::loadAbstract(const char* lib, const char* name) {
     else if(memcmp(lib, "file#", 5) == 0) {
         XMLDocument doc;
         if(doc.LoadFile(static_cast<const char*>(lib + 5)) != XML_SUCCESS) return nullptr;
-        return logisimAbstract(doc.FirstChild()->NextSibling(), name);
+        return logisimAbstract(doc.FirstChild()->NextSibling(), lib, name);
     } else if(lib[0] == '#') {
         return localAbstract(lib, name);
     } else if(memcmp(lib, "lua#", 4) == 0) {
         return luaAbstract(lib, name);
     }
+    return nullptr;
 }
