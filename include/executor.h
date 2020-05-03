@@ -16,12 +16,16 @@ public:
 
 class LuaExecutor : public Executor {
 public:
-    LuaExecutor(const char* scriptfile);
+    LuaExecutor();
     ~LuaExecutor();
+    void setLuaFile(const char* _luafile);
     void execute(AbstractNode* abstractNode);
 
 public:
     lua_State* L;
+
+protected:
+    const char* luafile;
 };
 
 #endif // EXECUTOR_H

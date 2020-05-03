@@ -6,13 +6,11 @@
 
 #include "executor.h"
 
-LuaExecutor::LuaExecutor(const char* scriptfile) {
+/*LuaExecutor::LuaExecutor(const char* scriptfile) {
     L = luaL_newstate();
     luaL_openlibs(L);
     int status = luaL_loadfile(L, scriptfile);
     if (status) {
-        /* If something went wrong, error message is at the top of */
-        /* the stack */
         fprintf(stderr, "Couldn't load file: %s\n", lua_tostring(L, -1));
     }
 }
@@ -26,7 +24,6 @@ void LuaExecutor::execute(AbstractNode* abstractNode) {
 
     // TODO LUA API
 
-    /* Ask Lua to run our little script */
     int result = lua_pcall(L, 0, LUA_MULTRET, 0);
 
     if (result) {
@@ -35,6 +32,10 @@ void LuaExecutor::execute(AbstractNode* abstractNode) {
     }
 
     printf("Script returned: %.0f\n", lua_tonumber(L, -1));
-}
+}*/
 
 void Executor::execute(AbstractNode *) { }
+
+void LuaExecutor::setLuaFile(const char *_luafile) {
+    luafile = _luafile;
+}

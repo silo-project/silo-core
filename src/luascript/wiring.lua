@@ -1,0 +1,3 @@
+function regAbstractCircuit()
+    registerAbstractCircuit()
+end

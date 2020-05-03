@@ -15,7 +15,6 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="valign" val="base"/>
     </tool>
   </lib>
-  <lib desc="file#LogisimExampleLib.circ" name="7"/>
   <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -54,31 +53,5 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
-    <wire from="(150,140)" to="(180,140)"/>
-    <wire from="(210,140)" to="(240,140)"/>
-    <comp loc="(160,210)" name="sth"/>
-    <comp lib="1" loc="(210,140)" name="NOT Gate"/>
-    <comp lib="0" loc="(240,140)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-    </comp>
-    <comp lib="7" loc="(340,110)" name="main"/>
-    <comp lib="0" loc="(150,140)" name="Pin"/>
-  </circuit>
-  <circuit name="sth">
-    <a name="circuit" val="sth"/>
-    <a name="clabel" val=""/>
-    <a name="clabelup" val="east"/>
-    <a name="clabelfont" val="SansSerif plain 12"/>
-    <comp lib="0" loc="(210,170)" name="Pin"/>
-    <comp lib="0" loc="(210,130)" name="Pin"/>
-    <comp lib="1" loc="(260,150)" name="AND Gate">
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="0" loc="(260,150)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="label" val="O"/>
-    </comp>
   </circuit>
 </project>
