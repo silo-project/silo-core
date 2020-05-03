@@ -9,8 +9,9 @@
 
 using std::string;
 
-circuit_id AbstractCircuit::placeAbstractCircuit(AbstractCircuit* abstractCircuit) {
+circuit_id AbstractCircuit::placeAbstractCircuit(AbstractCircuit* abstractCircuit, Position* position) {
     this->abstractCircuitVector.push_back(abstractCircuit);
+    this->abstractCircuitPositionVector.push_back(position);
     return this->abstractCircuitVector.size();
 }
 
@@ -38,10 +39,13 @@ void AbstractCircuit::placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, 
 
 Circuit::Circuit(AbstractCircuit* _abstractCircuit) {
     this->abstractCircuit = _abstractCircuit;
-    this->position = abstractCircuit->position;
 
-    for(auto a : _abstractCircuit->abstractCircuitVector) 
+    for(auto a : _abstractCircuit->abstractCircuitVector)
         this->circuitVector.push_back(new Circuit(a));
+
+    int i = 0;
+    for(auto p : _abstractCircuit->abstractCircuitPositionVector)
+        this->circuitVector.at(i)->position = p; i++;
 
     for(auto w : _abstractCircuit->abstractWireVector) 
         this->wireValueVector.push_back(new Value(w->width, 0, 0));

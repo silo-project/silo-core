@@ -12,7 +12,7 @@
 
 class Library {
 protected:
-    static std::map<uint32_t, AbstractCircuit*>* abstractCircuitMap;
+    std::map<uint32_t, AbstractCircuit*>* abstractCircuitMap;
 
 public:
     std::map<uint32_t, AbstractCircuit*>* getAbstractCircuitMapPtr();

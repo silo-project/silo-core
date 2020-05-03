@@ -32,12 +32,12 @@ struct AbstractWire {
 
 class AbstractCircuit {
 public:
-    Position position;
     std::vector<AbstractCircuit*> abstractCircuitVector;
+    std::vector<Position*> abstractCircuitPositionVector;
     std::vector<AbstractWire*> abstractWireVector;
 
 public:
-    circuit_id placeAbstractCircuit(AbstractCircuit* circuit);
+    circuit_id placeAbstractCircuit(AbstractCircuit* circuit, Position* position);
     void placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, uint8_t width);
     AbstractCircuit* getEditableAbstractCircuit(circuit_id id);
     void removeAbstractCircuit(circuit_id id);
@@ -48,7 +48,7 @@ class Circuit {
 public:
     AbstractCircuit* abstractCircuit;
     AbstractNode* abstractNode;
-    Position position;
+    Position* position;
     circuitid_on_plane_t cpid;
 
 public:
