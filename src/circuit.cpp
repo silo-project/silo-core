@@ -24,18 +24,27 @@ void AbstractCircuit::removeAbstractCircuit(circuit_id id) {
 }
 
 void AbstractCircuit::placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, uint8_t width) {
-    AbstractWire* abstractWire = static_cast<AbstractWire *>(calloc(1, sizeof(AbstractWire)));
-    abstractWire->a.x = ax; abstractWire->a.y = ay;
-    abstractWire->b.x = bx; abstractWire->b.y = by;
+    AbstractWire* abstractWire = new AbstractWire;
+
+    abstractWire->a.x = ax; 
+    abstractWire->a.y = ay;
+    abstractWire->b.x = bx; 
+    abstractWire->b.y = by;
+
     abstractWire->width = width;
+
     this->abstractWireVector.push_back(abstractWire);
 }
 
 Circuit::Circuit(AbstractCircuit* _abstractCircuit) {
     this->abstractCircuit = _abstractCircuit;
     this->position = abstractCircuit->position;
-    for(auto a : _abstractCircuit->abstractCircuitVector) this->circuitVector.push_back(new Circuit(a));
-    for(auto w : _abstractCircuit->abstractWireVector) this->wireValueVector.push_back(new Value(w->width, 0, 0));
+
+    for(auto a : _abstractCircuit->abstractCircuitVector) 
+        this->circuitVector.push_back(new Circuit(a));
+
+    for(auto w : _abstractCircuit->abstractWireVector) 
+        this->wireValueVector.push_back(new Value(w->width, 0, 0));
 }
 
 void Circuit::setAttribute(const string& name, string attr) {
@@ -50,8 +59,10 @@ string Circuit::getAttribute(const string& name) {
 circuitid_on_plane_t Circuit::generateCircuitIDOnPlane(circuitid_on_plane_t nextcpid) {
     this->cpid = nextcpid;
     nextcpid++;
+
     for(auto p : this->circuitVector) {
         nextcpid = p->generateCircuitIDOnPlane(nextcpid);
     }
+
     return nextcpid;
 }

@@ -48,18 +48,24 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* name)
         for (XMLElement* wireelement = circelement->FirstChildElement("wire"); wireelement != nullptr; wireelement = wireelement->NextSiblingElement("wire")) {
             const char* from;
             const char* to;
+
             wireelement->QueryStringAttribute("from", &from);
             wireelement->QueryStringAttribute("to", &to);
+
             size_t fromstrlen = (strlen(from) - 2) * sizeof(char);
             size_t tostrlen = (strlen(to) - 2) * sizeof(char);
+
             char* fromtrim = static_cast<char *>(malloc(fromstrlen + sizeof(char)));
             char* totrim = static_cast<char *>(malloc(tostrlen + sizeof(char)));
+
             memcpy_s(fromtrim, fromstrlen + sizeof(char), (void*)((int8_t*)from + 1), fromstrlen);
             memcpy_s(totrim, tostrlen + sizeof(char), (void*)((int8_t*)to + 1), tostrlen);
+
             int32_t ax = atoi(strtok(fromtrim, ","));
             int32_t ay = atoi(strtok(NULL, ","));
             int32_t bx = atoi(strtok(totrim, ","));
             int32_t by = atoi(strtok(NULL, ","));
+
             tc->placeWire(ax, ay, bx, by, 0);
 
             std::cout << ax << " " <<  ay << " " << bx << " " << by << std::endl; // TODO DEBUG
@@ -68,31 +74,42 @@ AbstractCircuit* FileLoader::logisimAbstract(XMLNode* project, const char* name)
         for (XMLElement* compelement = circelement->FirstChildElement("comp"); compelement != nullptr; compelement = compelement->NextSiblingElement("comp")) {
             AbstractCircuit* lc;
             const char* loc;
+
             compelement->QueryStringAttribute("loc", &loc);
+
             size_t locstrlen = (strlen(loc) - 2) * sizeof(char);
             char* loctrim = static_cast<char *>(malloc(locstrlen + sizeof(char)));
+
             memcpy_s(loctrim, locstrlen + sizeof(char), (void*)((int8_t*)loc + 1), locstrlen);
+
             int32_t x = atoi(strtok(loctrim, ","));
             int32_t y = atoi(strtok(NULL, ","));
             int lib = compelement->IntAttribute("lib" , -1);
             const char* compname;
+
             compelement->QueryStringAttribute("name", &compname);
+
             if(lib == -1) {
                 lc = logisimAbstract(project, compname);
                 std::cout << "LOCAL LOADING" << std::endl;
-            } else {
+            }
+            else {
                 AbstractCircuitManager asman;
                 const char* libfile = libraryFileMap.find(lib)->second.c_str();
+
                 if(asman.hasAbstractCircuit(libfile, compname)) {
                     lc = asman.getAbstractCircuit(libfile, compname);
                     std::cout << "REMOTE DB LOADING" << std::endl;
-                } else {
+                } 
+                else {
                     asman.registerAbstractCircuit(logisimAbstract(libfile, compname), libfile, compname);
                     lc = asman.getAbstractCircuit(libfile, compname);
                     std::cout << "REMOTE FILE LOADING" << std::endl;
                 }
             }
-            lc->position.x = x; lc->position.y = y;
+
+            lc->position.x = x; 
+            lc->position.y = y;
             tc->placeAbstractCircuit(lc);
         }
     }
@@ -164,8 +181,10 @@ Circuit* FileLoader::logisim(XMLNode* project, const char* name) {
         for (XMLElement* aelement = circelement->FirstChildElement("a"); aelement != nullptr; aelement = aelement->NextSiblingElement("a")) {
             const char* attrname;
             const char* attrvalue;
+
             aelement->QueryStringAttribute("name", &attrname);
             aelement->QueryStringAttribute("val", &attrvalue);
+
             tc->setAttribute(string(attrname), string(attrvalue));
         }
     }

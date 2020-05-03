@@ -2,14 +2,12 @@
 // Created by penta on 2020-05-02.
 //
 
-#ifndef SILO_CORE_CIRCUITMANAGER_H
-#define SILO_CORE_CIRCUITMANAGER_H
+#ifndef CIRCUIT_MANAGER_H
+#define CIRCUIT_MANAGER_H
 
 #include "circuit.h"
 #include <map>
 #include <string>
-
-#define ABSTRACTCIRCUITMANAGER_CALCULATECRC(x, y) (static_cast<uint64_t>(static_cast<uint64_t>(crc32_1byte_tableless((x), strlen(x))) << 32 | crc32_1byte_tableless((y), strlen(y))))
 
 class AbstractCircuitManager {
 protected:
@@ -18,10 +16,13 @@ protected:
 public:
     std::map<uint64_t, AbstractCircuit*>* getAbstractCircuitMapPtr();
     AbstractCircuit* getAbstractCircuit(const char* libname, const char* circname);
-    bool hasAbstractCircuit(const char *libname, const char *circname);
+    bool hasAbstractCircuit(const char* libname, const char* circname);
     void registerAbstractCircuit(AbstractCircuit* abstractCircuit, const char* libname, const char* circname);
     AbstractCircuitManager();
+
+public:
+    static auto calculateCrc(const char* x, const char* y);
 };
 
 
-#endif //SILO_CORE_CIRCUITMANAGER_H
+#endif // CIRCUIT_MANAGER_H

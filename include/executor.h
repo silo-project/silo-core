@@ -2,8 +2,8 @@
 // Created by penta on 2020-05-02.
 //
 
-#ifndef SILO_CORE_EXECUTOR_H
-#define SILO_CORE_EXECUTOR_H
+#ifndef EXECUTOR_H
+#define EXECUTOR_H
 
 #include <lua.hpp>
 
@@ -18,10 +18,10 @@ class LuaExecutor : public Executor {
 public:
     LuaExecutor(const char* scriptfile);
     ~LuaExecutor();
-    void execute(AbstractNode *abstractNode);
+    void execute(AbstractNode* abstractNode);
 
 public:
     lua_State* L;
 };
 
-#endif //SILO_CORE_EXECUTOR_H
+#endif // EXECUTOR_H
