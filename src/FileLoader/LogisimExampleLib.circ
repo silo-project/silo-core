@@ -53,5 +53,20 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
+    <comp lib="0" loc="(970,440)" name="Transmission Gate"/>
+    <comp lib="0" loc="(970,520)" name="Bit Extender"/>
+    <comp lib="0" loc="(360,420)" name="Probe"/>
+    <comp lib="0" loc="(370,350)" name="Pin"/>
+    <comp lib="0" loc="(370,760)" name="Power"/>
+    <comp lib="0" loc="(970,340)" name="Transistor"/>
+    <comp lib="1" loc="(760,790)" name="AND Gate"/>
+    <comp lib="0" loc="(350,480)" name="Tunnel"/>
+    <comp lib="0" loc="(380,820)" name="Ground"/>
+    <comp lib="0" loc="(380,610)" name="Clock"/>
+    <comp lib="0" loc="(380,670)" name="Constant"/>
+    <comp lib="1" loc="(750,700)" name="Buffer"/>
+    <comp lib="1" loc="(780,650)" name="NOT Gate"/>
+    <comp lib="0" loc="(370,550)" name="Pull Resistor"/>
+    <comp lib="0" loc="(290,260)" name="Splitter"/>
   </circuit>
 </project>
