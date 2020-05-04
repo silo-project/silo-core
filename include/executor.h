@@ -5,8 +5,6 @@
 #ifndef EXECUTOR_H
 #define EXECUTOR_H
 
-#include <lua.hpp>
-
 #include "node.h"
 #include "library.h"
 
@@ -15,15 +13,15 @@ public:
     virtual void execute(AbstractNode*);
 };
 
-class LuaExecutor : public Executor {
+class TccExecutor : public Executor {
 public:
-    LuaExecutor(LuaLibrary* _library, const char* _executorname);
-    ~LuaExecutor();
+    TccExecutor(TccLibrary* _library, const char* _executorname);
+    ~TccExecutor();
     void execute(AbstractNode* abstractNode);
 
 protected:
     const char* executorname;
-    LuaLibrary* library;
+    TccLibrary* library;
 };
 
 #endif // EXECUTOR_H

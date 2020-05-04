@@ -10,12 +10,14 @@
 
 #include "Crc32.h"
 
+#include "libtcc.h"
+
 #include "executor.h"
 
-extern "C" {
+/*extern "C" {
 #include <cstdio>
 
-LuaLibrary* workinglib = NULL;
+TccLibrary* workinglib = NULL;
 
 static int registerAbstractCircuitExecutor(lua_State *L) {
     //puts("registerAbstractCircuitExecutor()");
@@ -27,14 +29,14 @@ static int registerAbstractCircuitExecutor(lua_State *L) {
     workinglib->registerAbstractCircuit(ac, lua_tostring(L, 1));
     //lua_settop(L, 0);
     return 0;
-}/*
+}
 int registerAbstractCircuitExecutor(const char* partname, const char* funcname) {
     AbstractCircuit *ac = new AbstractCircuit();
 
     ac->executor = new LuaExecutor(workinglib, funcname);
     workinglib->registerAbstractCircuit(ac, partname);
-}*/
 }
+}*/
 
 std::map<uint32_t, Library*>* LibraryManager::libraryMap = nullptr;
 
@@ -92,27 +94,10 @@ void Library::registerAbstractCircuit(AbstractCircuit* abstractCircuit, const ch
     abstractCircuitMap->insert(std::pair<uint32_t, AbstractCircuit*>(crc32_1byte_tableless(circname, strlen(circname)), abstractCircuit));
 };
 
-LuaLibrary::LuaLibrary(const char *_luafile) {
-    luafile = _luafile;
-    this->L = lua_open();
-    luaL_openlibs(this->L);
-
-    lua_pushcclosure(this->L, registerAbstractCircuitExecutor, 0);
-    lua_setglobal(this->L, "registerAbstractCircuit");
-
-    //std::cout << "library.cpp:102 " << luaL_dofile(this->L, luafile) << std::endl;
-    luaL_dofile(this->L, luafile);
-
-    workinglib = this;
-
-    lua_getglobal(this->L, "regAbstractCircuit");
-
-    lua_call(this->L, 0, 1);
-
-    //std::cout << "library.cpp:110 " << lua_tointeger(this->L, -1) << std::endl;
-    lua_tointeger(this->L, -1);
+TccLibrary::TccLibrary(const char *_tccfile) {
+    tccfile = _tccfile;
 }
 
-LuaLibrary::~LuaLibrary() {
-    lua_close(this->L);
+TccLibrary::~TccLibrary() {
+
 }

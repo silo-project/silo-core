@@ -8,7 +8,6 @@
 #include "circuit.h"
 #include <map>
 #include <string>
-#include <lua.hpp>
 
 class Library {
 protected:
@@ -22,19 +21,16 @@ public:
     Library();
 };
 
-class LuaLibrary : public Library {
-public:
-    lua_State* L;
-
+class TccLibrary : public Library {
 protected:
-    const char* luafile;
+    const char* tccfile;
 
 public:
-    LuaLibrary(const char* _luafile);
-    ~LuaLibrary();
+    TccLibrary(const char* _tccfile);
+    ~TccLibrary();
 
 private:
-    LuaLibrary();
+    TccLibrary();
 };
 
 class LibraryManager {
