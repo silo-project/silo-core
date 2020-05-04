@@ -5,9 +5,9 @@
 
 #include "executor.h"
 
-TccExecutor::TccExecutor(TccLibrary* _library, const char* _executorname) {
+TccExecutor::TccExecutor(TccLibrary* _library, void(*_executefunction)(AbstractNode*)) {
     library = _library;
-    executorname = _executorname;
+    executefunction = _executefunction;
 }
 
 void TccExecutor::execute(AbstractNode* abstractNode) {

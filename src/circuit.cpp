@@ -42,18 +42,18 @@ void AbstractCircuit::placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, 
 Circuit::Circuit(AbstractCircuit* _abstractCircuit) {
     this->abstractCircuit = _abstractCircuit;
 
-    for(const auto& a : _abstractCircuit->abstractCircuitVector) {
+    for(auto a : _abstractCircuit->abstractCircuitVector) {
         std::cout << "circuit.cpp:46 " << a << std::endl;
         this->circuitVector.push_back(new Circuit(a));
     }
 
     int i = 0;
-    for(const auto& p : _abstractCircuit->abstractCircuitPositionVector) {
+    for(auto p : _abstractCircuit->abstractCircuitPositionVector) {
         this->circuitVector.at(i)->position = p;
         i++;
     }
 
-    for(const auto& w : _abstractCircuit->abstractWireVector) {
+    for(auto w : _abstractCircuit->abstractWireVector) {
         this->wireValueVector.push_back(new Value(w->width, 0, 0));
     }
 }

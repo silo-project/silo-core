@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <cstring>
 #include <iostream>
+#include <fstream>
 
 #include "Crc32.h"
 
@@ -14,29 +15,21 @@
 
 #include "executor.h"
 
-/*extern "C" {
+extern "C" {
 #include <cstdio>
 
-TccLibrary* workinglib = NULL;
+TccLibrary* workinglib = nullptr;
 
-static int registerAbstractCircuitExecutor(lua_State *L) {
+static int TCC_registerAbstractCircuitExecutor(const char* compname, void(*executorPointer)(void* abstractNode)) {
     //puts("registerAbstractCircuitExecutor()");
     AbstractCircuit *ac = new AbstractCircuit();
 
-    const char *luaexecutorfuncname = lua_tostring(L, 2);
-
-    ac->executor = new LuaExecutor(workinglib, luaexecutorfuncname);
-    workinglib->registerAbstractCircuit(ac, lua_tostring(L, 1));
+    ac->executor = new TccExecutor(workinglib, reinterpret_cast<void (*)(AbstractNode *)>(executorPointer));
+    workinglib->registerAbstractCircuit(ac, compname);
     //lua_settop(L, 0);
     return 0;
 }
-int registerAbstractCircuitExecutor(const char* partname, const char* funcname) {
-    AbstractCircuit *ac = new AbstractCircuit();
-
-    ac->executor = new LuaExecutor(workinglib, funcname);
-    workinglib->registerAbstractCircuit(ac, partname);
 }
-}*/
 
 std::map<uint32_t, Library*>* LibraryManager::libraryMap = nullptr;
 
@@ -92,10 +85,42 @@ AbstractCircuit* Library::getAbstractCircuit(const char *circname) {
 void Library::registerAbstractCircuit(AbstractCircuit* abstractCircuit, const char *circname) {
     std::cout << "Register Circuit " << circname << std::endl;
     abstractCircuitMap->insert(std::pair<uint32_t, AbstractCircuit*>(crc32_1byte_tableless(circname, strlen(circname)), abstractCircuit));
-};
+}
+
+//TCCState* TccLibrary::s;
 
 TccLibrary::TccLibrary(const char *_tccfile) {
+    while(workinglib) {};
+    workinglib = this;
+
     tccfile = _tccfile;
+    std::cout << "INIT TCC LIBRARY " << tccfile << std::endl;
+    s = tcc_new();
+    if(!s) std::cout << "Can’t create a TCC context" << std::endl;
+    else std::cout << "TCC context Created" << std::endl;
+    tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
+
+    if (tcc_add_file(s, tccfile) > 0) {
+        std::cout << "Compilation error !" << std::endl;
+    }
+
+    std::cout << "FILEREADY TCC LIBRARY " << tccfile << std::endl;
+
+    tcc_add_symbol(s, "TCC_registerAbstractCircuitExecutor", reinterpret_cast<void*>(TCC_registerAbstractCircuitExecutor));
+
+    tcc_relocate(s, TCC_RELOCATE_AUTO);
+
+    void* onload = tcc_get_symbol(s, "onLoad");
+
+    if(!onload) {
+        std::cout << "NO onLoad()" << std::endl;
+    }
+
+    (reinterpret_cast<int(*)()>(onload))();
+    std::cout << "LOADED TCC LIBRARY " << tccfile << std::endl;
+
+    tcc_delete(s);
+    workinglib = nullptr;
 }
 
 TccLibrary::~TccLibrary() {

@@ -9,6 +9,10 @@
 #include <map>
 #include <string>
 
+extern "C" {
+#include "libtcc.h"
+}
+
 class Library {
 protected:
     std::map<uint32_t, AbstractCircuit*>* abstractCircuitMap;
@@ -24,6 +28,7 @@ public:
 class TccLibrary : public Library {
 protected:
     const char* tccfile;
+    TCCState* s;
 
 public:
     TccLibrary(const char* _tccfile);

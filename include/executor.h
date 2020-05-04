@@ -15,12 +15,12 @@ public:
 
 class TccExecutor : public Executor {
 public:
-    TccExecutor(TccLibrary* _library, const char* _executorname);
+    TccExecutor(TccLibrary* _library, void(*_executefunction)(AbstractNode*));
     ~TccExecutor();
     void execute(AbstractNode* abstractNode);
 
 protected:
-    const char* executorname;
+    void(*executefunction)(AbstractNode*);
     TccLibrary* library;
 };
 

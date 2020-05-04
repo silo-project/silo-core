@@ -2,9 +2,3 @@
 // Created by penta on 2020-05-04.
 //
 
-#ifndef SILO_CORE_TCCADDITIONAL_H
-#define SILO_CORE_TCCADDITIONAL_H
-
-
-
-#endif //SILO_CORE_TCCADDITIONAL_H
