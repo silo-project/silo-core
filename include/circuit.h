@@ -10,8 +10,6 @@
 #include "value.h"
 #include "node.h"
 
-class Executor;
-
 using circuit_id = int32_t;
 using circuitid_on_plane_t = int32_t;
 
@@ -41,7 +39,7 @@ public:
     void placeWire(int32_t ax, int32_t ay, int32_t bx, int32_t by, uint8_t width);
     AbstractCircuit* getEditableAbstractCircuit(circuit_id id);
     void removeAbstractCircuit(circuit_id id);
-    Executor* executor = nullptr;
+    void* executor = nullptr;
 };
 
 class Circuit {

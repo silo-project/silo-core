@@ -48,7 +48,7 @@ void clock(void* ac) {
     printf(ac);
 }
 
-void onLoad(void* workinglib) {
+void wiring_onLoad(void* workinglib) {
     TCC_registerAbstractCircuitExecutor(workinglib, "Ground", ground);
     TCC_registerAbstractCircuitExecutor(workinglib, "Power", power);
     TCC_registerAbstractCircuitExecutor(workinglib, "Constant", constant);

@@ -34,7 +34,7 @@ add_library(miniz miniz-2.1.0/miniz.c)
 # Windows
 # IN "tcc-0.9.27/win32"
 
-add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/library.cpp src/executor.cpp src/fileloader.cpp src/FileLoader/local.cpp src/FileLoader/tcc.cpp src/tcclibrary.cpp include/tcclibrary.h)
+add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/library.cpp src/fileloader.cpp src/FileLoader/local.cpp src/FileLoader/tcc.cpp src/tcclibrary.cpp include/tcclibrary.h)
 target_link_libraries(silo-core silo-core-gates tinyxml2 crc32 miniz)
 
 if(WIN32)

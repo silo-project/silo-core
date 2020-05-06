@@ -16,6 +16,9 @@ protected:
     TCCState* s;
     std::string templibdir;
     tinyxml2::XMLDocument* libinfo;
+    std::map<int, std::map<int, std::string*>*>* filemap = nullptr;
+    void* onLoad = nullptr;
+    void* onUnload = nullptr;
 
 public:
     TccLibrary(const char* _tccfile);

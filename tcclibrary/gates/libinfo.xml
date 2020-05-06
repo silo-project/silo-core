@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<library version="1.0">
-	<file tag="main">gates.c</file>
+<library version="1">
+	<event>
+		<func call="onLoad" name="gates_onLoad"/>
+	</event>
+	<file type="code" name="gates.c" id="0"/>
 </library>
