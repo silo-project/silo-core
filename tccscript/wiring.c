@@ -1,68 +1,64 @@
 #include <tcclib.h>
 
-static int TCC_registerAbstractCircuitExecutor(const char* compname, void(*executorPointer)(void* abstractNode));
-
 void ground(void* ac) {
-
+    printf(ac);
 }
 
 void power(void* ac) {
-
+    printf(ac);
 }
 
 void constant(void* ac) {
-
+    printf(ac);
 }
 
 void splitter(void* ac) {
-
+    printf(ac);
 }
 
 void tunnel(void* ac) {
-
+    printf(ac);
 }
 
 void pin(void* ac) {
-
+    printf(ac);
 }
 
 void bit_extender(void* ac) {
-
+    printf(ac);
 }
 
 void transistor(void* ac) {
-
+    printf(ac);
 }
 
 void pull_resistor(void* ac) {
-
+    printf(ac);
 }
 
 void transmission_gate(void* ac) {
-
+    printf(ac);
 }
 
 void probe(void* ac) {
-
+    printf(ac);
 }
 
 void clock(void* ac) {
-
+    printf(ac);
 }
 
-void onLoad() {
-    printf("Loading Start");
-    TCC_registerAbstractCircuitExecutor("Ground", ground);
-    TCC_registerAbstractCircuitExecutor("Power", power);
-    TCC_registerAbstractCircuitExecutor("Constant", constant);
-    TCC_registerAbstractCircuitExecutor("Splitter", splitter);
-    TCC_registerAbstractCircuitExecutor("tunnel", tunnel);
-    TCC_registerAbstractCircuitExecutor("Pin", pin);
-    TCC_registerAbstractCircuitExecutor("Bit Extender", bit_extender);
-    TCC_registerAbstractCircuitExecutor("Transistor", transistor);
-    TCC_registerAbstractCircuitExecutor("Pull Resistor", pull_resistor);
-    TCC_registerAbstractCircuitExecutor("Transmission Gate", transmission_gate);
-    TCC_registerAbstractCircuitExecutor("Probe", probe);
-    TCC_registerAbstractCircuitExecutor("Clock", clock);
-    printf("Loading End");
+void onLoad(void* workinglib) {
+    TCC_registerAbstractCircuitExecutor(workinglib, "Ground", ground);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Power", power);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Constant", constant);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Splitter", splitter);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Tunnel", tunnel);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Pin", pin);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Bit Extender", bit_extender);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Transistor", transistor);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Pull Resistor", pull_resistor);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Transmission Gate", transmission_gate);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Probe", probe);
+    TCC_registerAbstractCircuitExecutor(workinglib, "Clock", clock);
 }

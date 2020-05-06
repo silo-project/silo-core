@@ -25,19 +25,6 @@ public:
     Library();
 };
 
-class TccLibrary : public Library {
-protected:
-    const char* tccfile;
-    TCCState* s;
-
-public:
-    TccLibrary(const char* _tccfile);
-    ~TccLibrary();
-
-private:
-    TccLibrary();
-};
-
 class LibraryManager {
 protected:
     static std::map<uint32_t, Library*>* libraryMap;

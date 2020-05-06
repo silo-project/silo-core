@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "library.h"
+#include "tcclibrary.h"
 #include "fileloader.h"
 #include "circuit.h"
 

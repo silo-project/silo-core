@@ -8,6 +8,8 @@
 #include "node.h"
 #include "library.h"
 
+#include "tcclibrary.h"
+
 class Executor {
 public:
     virtual void execute(AbstractNode*);

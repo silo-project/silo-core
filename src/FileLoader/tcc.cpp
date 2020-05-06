@@ -7,7 +7,9 @@
 #include "fileloader.h"
 #include "circuit.h"
 #include "library.h"
-#include "typeinfo"
+#include "tcclibrary.h"
+
+#include <typeinfo>
 
 AbstractCircuit* FileLoader::tccAbstract(const char* lib, const char* name) {
     std::cout << "LOADING TCC LIBRARY " << lib << " " << name << std::endl;
