@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<library version="1.0">
+	<schem>
+		<func call="onLoad" id="0" name="gates_onLoad"/>
+	</schem>
+	<file>
+		<code file="gates.c" id="0"/>
+	</file>
+</library>

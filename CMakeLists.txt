@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(include)
 include_directories(tinyxml2-7.1.0)
 include_directories(Crc32)
-include_directories(LuaJIT-2.0/src)
+#include_directories(LuaJIT-2.0/src)
 #include_directories(LuaJIT-2.0.5/src/buildvm)
 
 #file(GLOB LUAJIT_SRC

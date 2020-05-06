@@ -8,11 +8,14 @@
 #include "library.h"
 #include "libtcc.h"
 
+#include "tinyxml2.h"
+
 class TccLibrary : public Library {
 protected:
     const char* tccfile;
     TCCState* s;
-    char* templibdir;
+    std::string templibdir;
+    tinyxml2::XMLDocument* libinfo;
 
 public:
     TccLibrary(const char* _tccfile);

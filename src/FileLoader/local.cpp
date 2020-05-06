@@ -22,31 +22,31 @@ AbstractCircuit* FileLoader::localAbstract(const char* lib, const char* name) {
         switch (lib[1]) {
             case 'W':
                 if (strcmp(lib, "#Wiring")) break;
-                l = new TccLibrary("wiring.c");
+                l = new TccLibrary("wiring.zip");
                 break;
             case 'G':
                 if (strcmp(lib, "#Gates")) break;
-                l = new TccLibrary("gates.c");
+                l = new TccLibrary("gates.zip");
                 break;
             case 'P':
                 if (strcmp(lib, "#Plexers")) break;
-                l = new TccLibrary("plexers.c");
+                l = new TccLibrary("plexers.zip");
                 break;
             case 'A':
                 if (strcmp(lib, "#Arithmetic")) break;
-                l = new TccLibrary("arithmetic.c");
+                l = new TccLibrary("arithmetic.zip");
                 break;
             case 'M':
                 if (strcmp(lib, "#Memory")) break;
-                l = new TccLibrary("memory.c");
+                l = new TccLibrary("memory.zip");
                 break;
             case 'I':
                 if (strcmp(lib, "#I/O")) break;
-                l = new TccLibrary("iando.c");
+                l = new TccLibrary("iando.zip");
                 break;
             case 'B':
                 if (strcmp(lib, "#Base")) break;
-                l = new TccLibrary("base.c");
+                l = new TccLibrary("base.zip");
                 break;
             default:
                 std::cout << "UNKNOWN LOCAL LIBRARY" << std::endl;

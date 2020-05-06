@@ -54,11 +54,9 @@ TccLibrary::TccLibrary(const char *_tccfile) {
     mz_zip_reader_init_file(zip, tccfile, 0);
 
     //std::filesystem::
-    const char* _templibdir = (std::filesystem::temp_directory_path().u8string() + "/tcc-" + n2hexstr(crc32_1byte_tableless(tccfile, strlen(tccfile)), 8)).c_str();
+    templibdir = std::filesystem::temp_directory_path().u8string() + "/tcc-" + n2hexstr(crc32_1byte_tableless(tccfile, strlen(tccfile)), 8);
 
-    templibdir = static_cast<char *>(calloc(strlen(_templibdir) + 1, sizeof(char)));
-
-    strcpy(templibdir, _templibdir);
+    std::cout << "WorkingDir " << templibdir << std::endl;
 
     std::filesystem::remove_all(templibdir);
     std::filesystem::create_directory(templibdir);
@@ -71,14 +69,17 @@ TccLibrary::TccLibrary(const char *_tccfile) {
         memset(stat, 0, sizeof(mz_zip_archive_file_stat));
         mz_zip_reader_file_stat(zip, i, stat);
         if(!stat->m_is_directory) {
-            char* fn = static_cast<char *>(calloc(256, sizeof(char)));
-            strcpy_s(fn, 256, templibdir);
-            strcat_s(fn, 256, "/");
-            strcat_s(fn, 256, stat->m_filename);
+            const char* fn = (templibdir + "/" + stat->m_filename).c_str();
             std::cout << "Unzipping " << fn << std::endl;
             mz_zip_reader_extract_to_file(zip, i, fn, 0);
         }
     }
+
+    libinfo = new tinyxml2::XMLDocument;
+    if(libinfo->LoadFile((templibdir + "/libinfo.xml").c_str()) != tinyxml2::XML_SUCCESS)
+        std::cout << "Unable to load TCCLIBRARY: Unable to open XML" << std::endl;
+
+    string workingcfile;
 
     // TODO TMP
 
@@ -87,7 +88,7 @@ TccLibrary::TccLibrary(const char *_tccfile) {
     else std::cout << "TCC context Created" << std::endl;
     tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
 
-    if (tcc_add_file(s, tccfile) > 0) {
+    if (tcc_add_file(s, workingcfile.c_str()) > 0) {
         std::cout << "Compilation error !" << std::endl;
     }
 
