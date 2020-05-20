@@ -46,9 +46,9 @@ public:
     explicit ServerSocket(unsigned short portnum) noexcept;
     ~ServerSocket();
     void run();
-    
+
 protected:
-    void threadRunner(SOCKET *serversocket, std::vector<AcceptedSocket *> *clients, bool *stopflag, timeval *timeout);
+    static void threadRunner(SOCKET *serversocket, std::vector<AcceptedSocket *> *clients, bool *stopflag, timeval *timeout);
 };
 
 #endif //SILO_CORE_TCPSERVER_H
