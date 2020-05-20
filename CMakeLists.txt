@@ -5,8 +5,17 @@ set(CMAKE_CXX_STANDARD 17)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
+include(DownloadProject.cmake)
+
+download_project(
+        PROJ tinyxml2
+        GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
+        GIT_TAG 7.1.0
+)
+
 include_directories(include)
-include_directories(tinyxml2-7.1.0)
+include_directories(${tinyxml2_SOURCE_DIR})
+include_directories(miniz-2.1.0)
 include_directories(Crc32)
 #include_directories(LuaJIT-2.0/src)
 #include_directories(LuaJIT-2.0.5/src/buildvm)
@@ -17,7 +26,7 @@ include_directories(sha1)
 #file(GLOB LUAJIT_BUILDVM_SRC
 #        "LuaJIT-2.0.5/src/host/*.c")
 
-add_library(tinyxml2 tinyxml2-7.1.0/tinyxml2.cpp)
+add_library(tinyxml2 ${tinyxml2_SOURCE_DIR}/tinyxml2.cpp)
 add_library(silo-core-gates src/Gates/buffer_gate.cpp src/Gates/and_gate.cpp src/Gates/not_gate.cpp)
 add_library(crc32 Crc32/Crc32.cpp)
 add_library(miniz miniz-2.1.0/miniz.c)

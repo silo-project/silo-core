@@ -10,7 +10,7 @@
 
 #include "Crc32.h"
 
-#include "../miniz-2.1.0/miniz.h"
+#include "miniz.h"
 
 std::vector<std::string>* TccLibraryFileType = nullptr;
 
