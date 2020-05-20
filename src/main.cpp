@@ -2,10 +2,17 @@
 
 #include <iostream>
 #include "fileloader.h"
+#include <cstdio>
+#include "tcpserver.h"
 
 #include "tinyxml2.h"
 
 int main(int argc, char** argv) {
+    ServerSocket ss(8000);
+    ss.run();
+    getchar();
+    return 0;
+
     const char* lib = "file#../src/FileLoader/LogisimExample.circ";
 
     tinyxml2::XMLDocument doc;

@@ -10,6 +10,7 @@ include_directories(tinyxml2-7.1.0)
 include_directories(Crc32)
 #include_directories(LuaJIT-2.0/src)
 #include_directories(LuaJIT-2.0.5/src/buildvm)
+include_directories(sha1)
 
 #file(GLOB LUAJIT_SRC
 #        "LuaJIT-2.0.5/src/*.c")
@@ -20,7 +21,7 @@ add_library(tinyxml2 tinyxml2-7.1.0/tinyxml2.cpp)
 add_library(silo-core-gates src/Gates/buffer_gate.cpp src/Gates/and_gate.cpp src/Gates/not_gate.cpp)
 add_library(crc32 Crc32/Crc32.cpp)
 add_library(miniz miniz-2.1.0/miniz.c)
-
+add_library(sha1 sha1/sha1.cpp)
 
 # ./configure
 # make libtcc.a
@@ -34,14 +35,15 @@ add_library(miniz miniz-2.1.0/miniz.c)
 # Windows
 # IN "tcc-0.9.27/win32"
 
-add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/library.cpp src/fileloader.cpp src/FileLoader/local.cpp src/FileLoader/tcc.cpp src/tcclibrary.cpp include/tcclibrary.h)
-target_link_libraries(silo-core silo-core-gates tinyxml2 crc32 miniz)
+add_executable(silo-core src/main.cpp src/node.cpp src/value.cpp src/sender.cpp src/receiver.cpp src/simulation.cpp src/circuit.cpp src/FileLoader/logisim.cpp src/library.cpp src/fileloader.cpp src/FileLoader/local.cpp src/FileLoader/tcc.cpp src/tcclibrary.cpp include/tcclibrary.h src/tcpserver.cpp)
+target_link_libraries(silo-core silo-core-gates tinyxml2 crc32 miniz sha1)
 
 if(WIN32)
     include_directories(tcc-0.9.27/win32/libtcc)
     target_link_libraries(silo-core ${CMAKE_SOURCE_DIR}/tcc-0.9.27/win32/libtcc.dll)
 #    include_directories(tcc-0.9.27)
     target_link_libraries(silo-core ${CMAKE_SOURCE_DIR}/tcc-0.9.27/win32/lib/libtcc1-64.a)
+    target_link_libraries(silo-core ws2_32)
 else()
     include_directories(tcc-0.9.27)
     target_link_libraries(silo-core ${CMAKE_SOURCE_DIR}/tcc-0.9.27/libtcc.a)
