@@ -50,74 +50,76 @@ ServerSocket::ServerSocket(unsigned short portnum) noexcept {
     to.tv_usec = 100000;
 }
 
-void ServerSocket::run() {
-    if(t) return;
-    t = new std::thread([](SOCKET* serversocket, std::vector<AcceptedSocket*>* clients, bool* stopflag, timeval* timeout) {
-        std::cout << "SERVER THREAD RUNNING" << std::endl;
-        fd_set rset;
-        while (!(*stopflag)) {
-            FD_ZERO(&rset);
-            FD_SET(*serversocket, &rset);
-            for(auto sock : *clients) FD_SET(sock->s, &rset);
+void ServerSocket::threadRunner(SOCKET* serversocket, std::vector<AcceptedSocket*>* clients, bool* stopflag, timeval* timeout) {
+    std::cout << "SERVER THREAD RUNNING" << std::endl;
+    fd_set rset;
+    while (!(*stopflag)) {
+        FD_ZERO(&rset);
+        FD_SET(*serversocket, &rset);
+        for(auto sock : *clients) FD_SET(sock->s, &rset);
 
-            int ret = select(0, &rset, nullptr, nullptr, timeout);
-            if (ret) {
-                //std::cout << "INCOMING" << std::endl;
+        int ret = select(0, &rset, nullptr, nullptr, timeout);
+        if (ret) {
+            //std::cout << "INCOMING" << std::endl;
 
-                if(FD_ISSET(*serversocket, &rset)) { // ACCEPT
-                    std::cout << "CONNECTION INCOMING" << std::endl;
-                    sockaddr_in caddr;
-                    size_t caddersz = sizeof(caddr);
-                    SOCKET clientsocket = accept(*serversocket, reinterpret_cast<struct sockaddr *>(&caddr),
-                                                 reinterpret_cast<int *>(&caddersz));
-                    if (clientsocket != INVALID_SOCKET) {
-                        clients->push_back(new AcceptedSocket(clientsocket));
-                    }
-                    std::cout << "CONNECTION REGISTERED" << std::endl;
+            if(FD_ISSET(*serversocket, &rset)) { // ACCEPT
+                std::cout << "CONNECTION INCOMING" << std::endl;
+                sockaddr_in caddr;
+                size_t caddersz = sizeof(caddr);
+                SOCKET clientsocket = accept(*serversocket, reinterpret_cast<struct sockaddr *>(&caddr),
+                                             reinterpret_cast<int *>(&caddersz));
+                if (clientsocket != INVALID_SOCKET) {
+                    clients->push_back(new AcceptedSocket(clientsocket));
                 }
+                std::cout << "CONNECTION REGISTERED" << std::endl;
+            }
 
-                for(AcceptedSocket* sock : *clients) {
-                    if(FD_ISSET(sock->s, &rset)) {    // DATA IN
-                        char* nrbuf = static_cast<char *>(malloc(MAX_TCP_BUFFER_SIZE));
-                        int rl = recv(sock->s, nrbuf, MAX_TCP_BUFFER_SIZE, 0);
+            for(AcceptedSocket* sock : *clients) {
+                if(FD_ISSET(sock->s, &rset)) {    // DATA IN
+                    char* nrbuf = static_cast<char *>(malloc(MAX_TCP_BUFFER_SIZE));
+                    int rl = recv(sock->s, nrbuf, MAX_TCP_BUFFER_SIZE, 0);
 
-                        if(rl == 0) {
-                            clients->erase(std::find(clients->begin(), clients->end(), sock));
-                            delete sock;
-                            continue;
-                        }
+                    if(rl == 0) {
+                        clients->erase(std::find(clients->begin(), clients->end(), sock));
+                        delete sock;
+                        continue;
+                    }
 
-                        if(rl == SOCKET_ERROR) {
-                            std::cout << WSAGetLastError() << std::endl;
-                            continue;
-                        }
+                    if(rl == SOCKET_ERROR) {
+                        std::cout << WSAGetLastError() << std::endl;
+                        continue;
+                    }
 
-                        std::cout << rl << std::endl;
-                        if(sock->rlen + rl > MAX_TCP_BUFFER_SIZE) {
-                            //rl = MAX_TCP_BUFFER_SIZE - sock->rlen;  // OVERFLOW
-                            continue;
-                        }
+                    std::cout << rl << std::endl;
+                    if(sock->rlen + rl > MAX_TCP_BUFFER_SIZE) {
+                        //rl = MAX_TCP_BUFFER_SIZE - sock->rlen;  // OVERFLOW
+                        continue;
+                    }
 
-                        memcpy(sock->rbuf + (sock->rlen), nrbuf, rl);
-                        free(nrbuf);
-                        sock->rlen += rl;
+                    memcpy(sock->rbuf + (sock->rlen), nrbuf, rl);
+                    free(nrbuf);
+                    sock->rlen += rl;
 
-                        switch(sock->sockettype) {
-                            case SocketType::WS:
-                                break;
-                            case SocketType::HTTP:
-                                if(sock->rlen >= 4 && memcmp(sock->rbuf + sock->rlen - 4, HTTPRequestEnd, 4) == 0) {
-                                    std::cout << "HTTP REQUEST COMPLETE" << std::endl;
-                                    sock->rbuf[sock->rlen] = '\0';
-                                    std::cout << sock->rbuf << std::endl;
-                                }
-                                break;
-                        }
+                    switch(sock->sockettype) {
+                        case SocketType::WS:
+                            break;
+                        case SocketType::HTTP:
+                            if(sock->rlen >= 4 && memcmp(sock->rbuf + sock->rlen - 4, HTTPRequestEnd, 4) == 0) {
+                                std::cout << "HTTP REQUEST COMPLETE" << std::endl;
+                                sock->rbuf[sock->rlen] = '\0';
+                                std::cout << sock->rbuf << std::endl;
+                            }
+                            break;
                     }
                 }
             }
         }
-    }, &sockfd, &clients, &stopflag, &to);
+    }
+}
+
+void ServerSocket::run() {
+    if(t) return;
+    t = new std::thread(threadRunner, &sockfd, &clients, &stopflag, &to);
 }
 
 ServerSocket::~ServerSocket() {

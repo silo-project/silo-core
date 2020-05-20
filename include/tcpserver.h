@@ -26,7 +26,7 @@ public:
     size_t rlen;/*, wlen;*/
 
 public:
-    AcceptedSocket(SOCKET _s);
+    explicit AcceptedSocket(SOCKET _s);
     ~AcceptedSocket();
 };
 
@@ -41,12 +41,14 @@ protected:
 public:
     SOCKET sockfd;
     bool stopflag;
-    fd_set rset;
 
 public:
-    ServerSocket(unsigned short portnum) noexcept;
+    explicit ServerSocket(unsigned short portnum) noexcept;
     ~ServerSocket();
     void run();
+    
+protected:
+    void threadRunner(SOCKET *serversocket, std::vector<AcceptedSocket *> *clients, bool *stopflag, timeval *timeout);
 };
 
 #endif //SILO_CORE_TCPSERVER_H
