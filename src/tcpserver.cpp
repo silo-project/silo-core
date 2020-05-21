@@ -6,6 +6,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstring>
+#include <httpparser/httprequestparser.h>
 
 const char* HTTPRequestEnd = "\r\n\r\n";
 
@@ -110,12 +111,22 @@ void ServerSocket::threadRunner(SOCKET* serversocket, std::vector<AcceptedSocket
                             for(;;) {
                                 ec = strstr(fc, "\r\n\r\n");
                                 if(ec) { // Request From fc to ec
-                                    int clen = ec - fc + 4;
-                                    char* req = static_cast<char *>(malloc(clen + 1));
-                                    memcpy(req, fc, clen);
-                                    req[clen] = '\0';
-                                    std::cout << "REQUEST COMPLETE LEN: " << clen << " DATA:" << std::endl << req;
-                                    free(req);
+                                    size_t clen = ec - fc + 4;
+
+                                    httpparser::HttpRequestParser parser;
+                                    httpparser::Request request;
+                                    httpparser::HttpRequestParser::ParseResult res = parser.parse(request, fc, ec + 3);
+
+                                    std::cout << "REQUEST COMPLETE LEN: " << clen << std::endl;
+
+                                    if(res == httpparser::HttpRequestParser::ParsingCompleted) {
+                                        std::cout << request.inspect() << std::endl;
+                                    } else {
+                                        std::cerr << "Parsing failed" << std::endl;
+                                        const char* bad_request = "HTTP/1.1 400 Bad Request\r\n";
+                                        send(sock->s, bad_request, strlen(bad_request), 0);
+                                    }
+
                                 } else {
                                     memmove(sock->rbuf, fc, sock->rlen - (fc - sock->rbuf));
                                     sock->rlen -= fc - sock->rbuf;

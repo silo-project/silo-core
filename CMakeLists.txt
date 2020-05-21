@@ -19,6 +19,12 @@ download_project(
         GIT_TAG release_0_9_27
 )
 
+download_project(
+        PROJ httpparser
+        GIT_REPOSITORY https://github.com/nekipelov/httpparser.git
+        #GIT_TAG release_0_9_27
+)
+
 if(WIN32)
     add_custom_target(
             tcc
@@ -47,6 +53,7 @@ include_directories(Crc32)
 #include_directories(LuaJIT-2.0/src)
 #include_directories(LuaJIT-2.0.5/src/buildvm)
 include_directories(sha1)
+include_directories(${httpparser_SOURCE_DIR}/src)
 
 #file(GLOB LUAJIT_SRC
 #        "LuaJIT-2.0.5/src/*.c")
