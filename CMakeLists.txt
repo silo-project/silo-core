@@ -33,7 +33,7 @@ else()
             COMMAND configure
             COMMAND make
             COMMAND copy -rf include "${CMAKE_BINARY_DIR}"
-            COMMAND copy -rf library "${CMAKE_BINARY_DIR}"
+            COMMAND copy -rf lib "${CMAKE_BINARY_DIR}"
             COMMAND copy -f libtcc.a "${CMAKE_BINARY_DIR}"
             VERBATIM
     )
