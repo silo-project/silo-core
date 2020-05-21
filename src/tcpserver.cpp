@@ -104,11 +104,31 @@ void ServerSocket::threadRunner(SOCKET* serversocket, std::vector<AcceptedSocket
                         case SocketType::WS:
                             break;
                         case SocketType::HTTP:
-                            if(sock->rlen >= 4 && memcmp(sock->rbuf + sock->rlen - 4, HTTPRequestEnd, 4) == 0) {
+                            sock->rbuf[sock->rlen] = '\0';
+                            char* fc = sock->rbuf;
+                            char* ec = nullptr;
+                            for(;;) {
+                                ec = strstr(fc, "\r\n\r\n");
+                                if(ec) { // Request From fc to ec
+                                    int clen = ec - fc + 4;
+                                    char* req = static_cast<char *>(malloc(clen + 1));
+                                    memcpy(req, fc, clen);
+                                    req[clen] = '\0';
+                                    std::cout << "REQUEST COMPLETE LEN: " << clen << " DATA:" << std::endl << req;
+                                    free(req);
+                                } else {
+                                    memmove(sock->rbuf, fc, sock->rlen - (fc - sock->rbuf));
+                                    sock->rlen -= fc - sock->rbuf;
+                                    break;
+                                }
+
+                                fc = ec + 4;
+                            }
+                            /*if(sock->rlen >= 4 && memcmp(sock->rbuf + sock->rlen - 4, HTTPRequestEnd, 4) == 0) {
                                 std::cout << "HTTP REQUEST COMPLETE" << std::endl;
                                 sock->rbuf[sock->rlen] = '\0';
                                 std::cout << sock->rbuf << std::endl;
-                            }
+                            }*/
                             break;
                     }
                 }

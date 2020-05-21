@@ -8,10 +8,10 @@
 #include "tinyxml2.h"
 
 int main(int argc, char** argv) {
-    /*ServerSocket ss(8000);
+    ServerSocket ss(8000);
     ss.run();
     getchar();
-    return 0;*/
+    return 0;
 
     const char* lib = "file#../src/FileLoader/LogisimExample.circ";
 
