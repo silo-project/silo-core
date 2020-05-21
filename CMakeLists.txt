@@ -32,8 +32,8 @@ else()
             WORKING_DIRECTORY ${tcc_SOURCE_DIR}
             COMMAND configure
             COMMAND make
-            COMMAND copy -rf include "${CMAKE_BINARY_DIR}"
-            COMMAND copy -rf lib "${CMAKE_BINARY_DIR}"
+            COMMAND copy -rf include "${CMAKE_BINARY_DIR}/include"
+            COMMAND copy -rf lib "${CMAKE_BINARY_DIR}/lib"
             COMMAND copy -f libtcc.a "${CMAKE_BINARY_DIR}"
             VERBATIM
     )
