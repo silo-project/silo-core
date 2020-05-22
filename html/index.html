@@ -3,34 +3,36 @@
 <head>
     <meta charset="utf-8">
     <title>SiLo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
     <style>
-        body {
+        html, body {
+            font-family: 'Comic Neue', cursive;
             margin: 0;
             padding: 0;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
         }
         #menu {
+            flex: 0 1 auto;
             border-bottom: 1px black solid;
         }
 
         #main-menu > li {
             float: left;
             position: relative;
-            padding-left: 1em;
-            padding-right: 1em;
-            padding-top: 0.5em;
-            padding-bottom: 0.5em;
         }
 
-        #main-menu > li > span {
+        #main-menu > li > div {
             text-align: center;
+            margin-left: 1em;
+            margin-right: 1em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
         }
 
         #main-menu > li:hover .sub-menu {
             visibility: visible;
-        }
-
-        i.caret-down ::before {
-            content: "\25BE";
         }
 
         .sub-menu {
@@ -46,25 +48,34 @@
             list-style: none;
         }
 
+        .sub-menu > li {
+            margin: 0.3em;
+        }
+
+        #mainplane {
+            flex: 1 1 auto;
+            width: 100%;
+            height: 100%;
+            background-color: azure;
+        }
     </style>
 </head>
 <body>
-    <div id="frame">
-        <div id="nav">
-            <div id="menu">
-                <ul id="main-menu">
-                    <li>
-                        <span>File</span><i class="caret-down"></i>
+    <div id="nav">
+        <div id="menu">
+            <ul id="main-menu">
+                <li>
+                <div><span>File</span></div>
                     </li>
                     <li>
-                        <span>View</span><i class="caret-down"></i>
+                    <div><span>View</span></div>
                         <ul class="sub-menu">
                             <li><a>submenu</a></li>
                             <li><a>submenu</a></li>
                         </ul>
                     </li>
                     <li>
-                        <span>MENU3</span><i class="caret-down"></i>
+                        <div><span>MENU3</span></div>
                         <ul class="sub-menu">
                             <li><a>submenu</a></li>
                             <li><a>submenu</a></li>
@@ -76,10 +87,9 @@
                 <div style="clear: both;"></div>
             </div>
         </div>
-        <div id="container">
-
+        <div id="container" style="height: 100%;">
+            <svg id="mainplane"></svg>
         </div>
-    </div>
 
     <script>
         var coll = document.getElementsByClassName("collapsible");
