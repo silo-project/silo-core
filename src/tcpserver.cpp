@@ -6,9 +6,19 @@
 #include <iostream>
 #include <algorithm>
 #include <cstring>
+#include <fstream>
+#include <filesystem>
 #include <httpparser/httprequestparser.h>
 
 const char* HTTPRequestEnd = "\r\n\r\n";
+const size_t HTTPRequestEndLength = 4;
+
+inline void eraseAllSubStr(std::string &mainStr, const std::string &toErase) {
+    size_t pos = std::string::npos;
+
+    // Search for the substring in string in a loop untill nothing is found
+    while ((pos = mainStr.find(toErase)) != std::string::npos) mainStr.erase(pos, toErase.length());
+}
 
 AcceptedSocket::AcceptedSocket(SOCKET _s) {
     s = _s;
@@ -26,6 +36,8 @@ AcceptedSocket::~AcceptedSocket() {
 ServerSocket::ServerSocket(unsigned short portnum) noexcept {
     t = nullptr;
     stopflag = false;
+
+    rootpath = new std::string("../html/");
 
     if(WSAStartup(MAKEWORD(2,2),&wsaData) != 0) {
         std::cout << "" << std::endl;
@@ -51,7 +63,7 @@ ServerSocket::ServerSocket(unsigned short portnum) noexcept {
     to.tv_usec = 100000;
 }
 
-void ServerSocket::threadRunner(SOCKET* serversocket, std::vector<AcceptedSocket*>* clients, bool* stopflag, timeval* timeout) {
+void ServerSocket::threadRunner(std::string* rootpath, SOCKET* serversocket, std::vector<AcceptedSocket*>* clients, bool* stopflag, timeval* timeout) {
     std::cout << "SERVER THREAD RUNNING" << std::endl;
     fd_set rset;
     while (!(*stopflag)) {
@@ -109,22 +121,76 @@ void ServerSocket::threadRunner(SOCKET* serversocket, std::vector<AcceptedSocket
                             char* fc = sock->rbuf;
                             char* ec = nullptr;
                             for(;;) {
-                                ec = strstr(fc, "\r\n\r\n");
+                                ec = strstr(fc, HTTPRequestEnd);
                                 if(ec) { // Request From fc to ec
-                                    size_t clen = ec - fc + 4;
+                                    size_t clen = ec - fc + HTTPRequestEndLength;
 
                                     httpparser::HttpRequestParser parser;
                                     httpparser::Request request;
-                                    httpparser::HttpRequestParser::ParseResult res = parser.parse(request, fc, ec + 3);
+                                    httpparser::HttpRequestParser::ParseResult res = parser.parse(request, fc, ec + HTTPRequestEndLength);
 
                                     std::cout << "REQUEST COMPLETE LEN: " << clen << std::endl;
 
                                     if(res == httpparser::HttpRequestParser::ParsingCompleted) {
-                                        std::cout << request.inspect() << std::endl;
+                                        if (request.method == "GET" || request.method == "POST") {
+                                            std::cout << request.uri << std::endl;
+                                            std::string formuri(request.uri);
+                                            eraseAllSubStr(formuri, "..");
+                                            std::string s = (*rootpath) + "/" + formuri;
+                                            std::cout << "OPENING IFSTREAM " << s << std::endl;
+                                            std::ifstream in(s, std::ios::binary);
+                                            if(in.good()) {
+                                                std::cout << "200 OK " << s << std::endl;
+                                                const char* ok_first = "HTTP/1.1 200 OK\r\nContent-Length: ";
+                                                send(sock->s, ok_first, strlen(ok_first), 0);
+
+                                                in.seekg(std::ios::end);
+                                                in.ignore(std::numeric_limits<std::streamsize>::max());
+                                                int flen = in.tellg();
+                                                flen = std::filesystem::file_size(std::filesystem::path(s));
+                                                std::cout << flen << std::endl;
+                                                in.clear();
+                                                in.seekg(std::ios::beg);
+                                                char fclen[11];
+                                                memset(fclen, 0x0, 11);
+                                                itoa(flen, fclen, 10);
+                                                send(sock->s, fclen, strlen(fclen), 0);
+
+                                                send(sock->s, HTTPRequestEnd, HTTPRequestEndLength, 0);
+
+                                                char* databuf = static_cast<char *>(malloc(MAX_TCP_BUFFER_SIZE));
+                                                char* databuftowrite = databuf;
+                                                int len;
+                                                while(!in.eof()) {
+                                                    memset(databuf, 0x0, MAX_TCP_BUFFER_SIZE);
+                                                    in.read(databuf, MAX_TCP_BUFFER_SIZE);
+                                                    len = in.gcount();
+                                                    std::cout << len << " " << databuf << std::endl;
+                                                    while (len > 0) {
+                                                        int amount = send(sock->s, databuftowrite, len, 0);
+                                                        len -= amount;
+                                                        databuftowrite += amount;
+                                                    }
+                                                }
+                                                free(databuf);
+                                            } else {
+                                                const char* not_found = "HTTP/1.1 404 Not Found\r\nContent-Length: 0";
+                                                send(sock->s, not_found, strlen(not_found), 0);
+                                                send(sock->s, HTTPRequestEnd, HTTPRequestEndLength, 0);
+                                            }
+                                        } else {
+                                            std::cerr << "REQUIRE GET/PUT" << std::endl;
+                                            const char* bad_request = "HTTP/1.1 400 Bad Request\r\nContent-Length: 0";
+                                            send(sock->s, bad_request, strlen(bad_request), 0);
+                                            send(sock->s, HTTPRequestEnd, HTTPRequestEndLength, 0);
+                                        }
                                     } else {
                                         std::cerr << "Parsing failed" << std::endl;
-                                        const char* bad_request = "HTTP/1.1 400 Bad Request\r\n";
+                                        const char* bad_request = "HTTP/1.1 400 Bad Request\r\nContent-Length: 0";
                                         send(sock->s, bad_request, strlen(bad_request), 0);
+                                        send(sock->s, HTTPRequestEnd, HTTPRequestEndLength, 0);
+
+
                                     }
 
                                 } else {
@@ -150,7 +216,7 @@ void ServerSocket::threadRunner(SOCKET* serversocket, std::vector<AcceptedSocket
 
 void ServerSocket::run() {
     if(t) return;
-    t = new std::thread(threadRunner, &sockfd, &clients, &stopflag, &to);
+    t = new std::thread(threadRunner, rootpath, &sockfd, &clients, &stopflag, &to);
 }
 
 ServerSocket::~ServerSocket() {
@@ -160,4 +226,5 @@ ServerSocket::~ServerSocket() {
     for(auto s : clients) delete s;
     WSACleanup();
     delete t;
+    delete rootpath;
 }

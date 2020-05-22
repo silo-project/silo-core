@@ -37,6 +37,7 @@ protected:
     std::thread* t;
     timeval to;
     std::vector<AcceptedSocket*> clients;
+    std::string* rootpath;
 
 public:
     SOCKET sockfd;
@@ -48,7 +49,7 @@ public:
     void run();
 
 protected:
-    static void threadRunner(SOCKET *serversocket, std::vector<AcceptedSocket *> *clients, bool *stopflag, timeval *timeout);
+    static void threadRunner(std::string* rootpath, SOCKET *serversocket, std::vector<AcceptedSocket *> *clients, bool *stopflag, timeval *timeout);
 };
 
 #endif //SILO_CORE_TCPSERVER_H
