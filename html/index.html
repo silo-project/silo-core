@@ -3,8 +3,71 @@
 <head>
     <meta charset="utf-8">
     <title>SiLo</title>
+    <style>
+        .navbutton div {
+            float: left;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .navbutton button{
+            float: left;
+            margin-left: 0;
+            margin-right: 0;
+            background: transparent;
+            border: 1px solid black;
+        }
+
+        .caret-down::after{
+            content: "\25BE";
+        }
+
+        .collapsiblecontent {
+            display: none;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-    <p>Hello, world!</p>
+    <div id="frame">
+        <div id="nav">
+            <div class="navbutton">
+                <button class="navbutton collapsible">
+                    <span class="caret-down">File</span>
+                </button>
+                <div class="collapsiblecontent">
+                    <a>STH</a>
+                </div>
+            </div>
+            <div class="navbutton">
+                <button class="navbutton collapsible">
+                    <span class="caret-down">View</span>
+                </button>
+                <div class="collapsiblecontent">
+                    <a>Something</a>
+                </div>
+            </div>
+        </div>
+        <div id="container">
+
+        </div>
+    </div>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
