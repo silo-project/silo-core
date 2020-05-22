@@ -17,7 +17,7 @@
             flex-flow: column;
         }
         #menu {
-            flex: 0 1 auto;
+            flex: 1 1 auto;
             border-bottom: 1px #333841 solid;
         }
 
@@ -53,16 +53,30 @@
         }
 
         #mainplane {
-            flex: 1 1 auto;
             width: 100%;
             height: 100%;
             background-color: #282c34;
+        }
+
+        #editor {
+            display: flex;
         }
 
         #editornav {
             position: absolute;
             top: 4em;
             right: 2em;
+        }
+
+        #editorview {
+            height: 100%;
+            flex: 1 1 auto;
+        }
+
+        #editorlibrary {
+            height: 100%;
+            border-left: 1px #333841 solid;
+            flex: 0 0 30em;
         }
 
         .editornavzoom {
@@ -79,34 +93,43 @@
         <div id="menu">
             <ul id="main-menu">
                 <li>
-                <div><span>File</span></div>
-                    </li>
-                    <li>
+                    <div><span>File</span></div>
+                    <ul class="sub-menu">
+                        <li><a>submenu</a></li>
+                        <li><a>submenu</a></li>
+                    </ul>
+                </li>
+                <li>
                     <div><span>View</span></div>
-                        <ul class="sub-menu">
-                            <li><a>submenu</a></li>
-                            <li><a>submenu</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div><span>MENU3</span></div>
-                        <ul class="sub-menu">
-                            <li><a>submenu</a></li>
-                            <li><a>submenu</a></li>
-                            <li><a>submenu</a></li>
-                            <li><a>submenu</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div style="clear: both;"></div>
-            </div>
+                    <ul class="sub-menu">
+                        <li><a>submenu</a></li>
+                        <li><a>submenu</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div><span>MENU3</span></div>
+                    <ul class="sub-menu">
+                        <li><a>submenu</a></li>
+                        <li><a>submenu</a></li>
+                        <li><a>submenu</a></li>
+                        <li><a>submenu</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div style="clear: both;"></div>
         </div>
-        <div id="editor" style="height: 100%;">
+    </div>
+    <div id="editor" style="height: 100%;">
+        <div id="editorview">
             <svg id="mainplane"></svg>
             <div id="editornav">
                 <button id="editornavzoomincr" class="editornavzoom">+</button>
                 <button id="editornavzoomdecr" class="editornavzoom">-</button>
             </div>
         </div>
+        <div id="editorlibrary">
+
+        </div>
+    </div>
 </body>
 </html>
