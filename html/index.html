@@ -4,48 +4,76 @@
     <meta charset="utf-8">
     <title>SiLo</title>
     <style>
-        .navbutton div {
-            float: left;
-            margin-left: 0;
-            margin-right: 0;
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #menu {
+            border-bottom: 1px black solid;
         }
 
-        .navbutton button{
+        #main-menu > li {
             float: left;
-            margin-left: 0;
-            margin-right: 0;
-            background: transparent;
-            border: 1px solid black;
+            position: relative;
+            padding-left: 1em;
+            padding-right: 1em;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
         }
 
-        .caret-down::after{
+        #main-menu > li > span {
+            text-align: center;
+        }
+
+        #main-menu > li:hover .sub-menu {
+            visibility: visible;
+        }
+
+        i.caret-down ::before {
             content: "\25BE";
         }
 
-        .collapsiblecontent {
-            display: none;
-            overflow: hidden;
+        .sub-menu {
+            position: absolute;
+            visibility: hidden;
+            background-color: white;
+            border: 1px black solid;
         }
+
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
     </style>
 </head>
 <body>
     <div id="frame">
         <div id="nav">
-            <div class="navbutton">
-                <button class="navbutton collapsible">
-                    <span class="caret-down">File</span>
-                </button>
-                <div class="collapsiblecontent">
-                    <a>STH</a>
-                </div>
-            </div>
-            <div class="navbutton">
-                <button class="navbutton collapsible">
-                    <span class="caret-down">View</span>
-                </button>
-                <div class="collapsiblecontent">
-                    <a>Something</a>
-                </div>
+            <div id="menu">
+                <ul id="main-menu">
+                    <li>
+                        <span>File</span><i class="caret-down"></i>
+                    </li>
+                    <li>
+                        <span>View</span><i class="caret-down"></i>
+                        <ul class="sub-menu">
+                            <li><a>submenu</a></li>
+                            <li><a>submenu</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>MENU3</span><i class="caret-down"></i>
+                        <ul class="sub-menu">
+                            <li><a>submenu</a></li>
+                            <li><a>submenu</a></li>
+                            <li><a>submenu</a></li>
+                            <li><a>submenu</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div style="clear: both;"></div>
             </div>
         </div>
         <div id="container">
