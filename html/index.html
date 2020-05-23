@@ -87,6 +87,12 @@
             display: block;
         }
     </style>
+    <script>
+        function mainplanedozoom(X) {
+            zoomg = document.getElementById('mainplanezoom');
+            zoomg.setAttribute('transform', "scale(" + (zoomg.getAttribute('transform').toString().match(/\(.*\)/).toString().replace(/[()]/g, "") * X) + ")")
+        }
+    </script>
 </head>
 <body>
     <div id="nav">
@@ -121,10 +127,16 @@
     </div>
     <div id="editor" style="height: 100%;">
         <div id="editorview">
-            <svg id="mainplane"></svg>
+            <svg id="mainplane">
+                <g id="mainplanemove" transform="translate(0, 0)">
+                    <g id="mainplanezoom" transform="scale(1)">
+                        <circle cx="50" cy="50" r="50"></circle>
+                    </g>
+                </g>
+            </svg>
             <div id="editornav">
-                <button id="editornavzoomincr" class="editornavzoom">+</button>
-                <button id="editornavzoomdecr" class="editornavzoom">-</button>
+                <button class="editornavzoom" onclick="mainplanedozoom(2);">+</button>
+                <button class="editornavzoom" onclick="mainplanedozoom(0.5);">-</button>
             </div>
         </div>
         <div id="editorlibrary">
