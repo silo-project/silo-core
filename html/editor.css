@@ -1,0 +1,84 @@
+html, body {
+    font-family: 'Comic Neue', cursive;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+#menu {
+    flex: 1 1 auto;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+#main-menu > li {
+    float: left;
+    position: relative;
+}
+
+#main-menu > li > div {
+    text-align: center;
+    margin: 0.5em 1em;
+}
+
+#main-menu > li:hover .sub-menu {
+    visibility: visible;
+}
+
+.sub-menu {
+    position: absolute;
+    visibility: hidden;
+    border-width: 1px;
+    border-style: solid;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sub-menu > li {
+    margin: 0.3em;
+}
+
+#mainplane {
+    width: 100%;
+    height: 100%;
+}
+
+#editor {
+    display: flex;
+}
+
+#editornav {
+    position: absolute;
+    top: 4em;
+    right: 2em;
+}
+
+#editorview {
+    height: 100%;
+    flex: 1 1 auto;
+}
+
+#editorlibrary {
+    height: 100%;
+    border-left-width: 1px;
+    border-left-style: solid;
+    flex: 0 0 30em;
+}
+
+.editornavzoom {
+    font-family: 'Roboto Mono', monospace;
+    border-width: 1px;
+    border-style: solid;
+    margin: 0;
+    display: block;
+}
+
+#editornavmovejoy {
+    width: 8em;
+    height: 8em;
+}

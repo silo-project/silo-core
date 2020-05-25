@@ -1,0 +1,32 @@
+
+html, body {
+    background-color: #212529;
+    color: #abb5bd;
+}
+#menu {
+    border-bottom-color: #343a40;
+}
+
+.sub-menu {
+    background-color: #212529;
+    border-color: #343a40;
+}
+
+#mainplane {
+    background-color: #212529;
+}
+
+#editorlibrary {
+    border-left-color: #343a40;
+}
+
+.editornavzoom {
+    background-color: #abb5bd;
+    border-color: #343a40;
+}
+
+#editornavmovejoy {
+    --joy-outlinecolor: #abb5bd;
+    --joy-stickcolor: #abb5bd;
+    --joy-selectcolor: #ced4da;
+}

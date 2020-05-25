@@ -5,92 +5,14 @@
     <title>SiLo</title>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style>
-        html, body {
-            background-color: #21252b;
-            font-family: 'Comic Neue', cursive;
-            color: #abb2bf;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            flex-flow: column;
-        }
-        #menu {
-            flex: 1 1 auto;
-            border-bottom: 1px #333841 solid;
-        }
-
-        #main-menu > li {
-            float: left;
-            position: relative;
-        }
-
-        #main-menu > li > div {
-            text-align: center;
-            margin: 0.5em 1em;
-        }
-
-        #main-menu > li:hover .sub-menu {
-            visibility: visible;
-        }
-
-        .sub-menu {
-            position: absolute;
-            visibility: hidden;
-            background-color: #21252b;
-            border: 1px #333841 solid;
-        }
-
-        ul, li {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .sub-menu > li {
-            margin: 0.3em;
-        }
-
-        #mainplane {
-            width: 100%;
-            height: 100%;
-            background-color: #282c34;
-        }
-
-        #editor {
-            display: flex;
-        }
-
-        #editornav {
-            position: absolute;
-            top: 4em;
-            right: 2em;
-        }
-
-        #editorview {
-            height: 100%;
-            flex: 1 1 auto;
-        }
-
-        #editorlibrary {
-            height: 100%;
-            border-left: 1px #333841 solid;
-            flex: 0 0 30em;
-        }
-
-        .editornavzoom {
-            font-family: 'Roboto Mono', monospace;
-            background-color: #a0a7b4;
-            border: 1px #464c55 solid;
-            margin: 0;
-            display: block;
-        }
-    </style>
+    <link href="editor.css" rel="stylesheet">
+    <link href="dark.css" rel="stylesheet">
+    <!--<link href="dark.css" rel="stylesheet" media="(prefers-color-scheme: no-preference) or (prefers-color-scheme: dark)">-->
+    <!--<link href="light.css" rel="stylesheet" media="prefers-color-scheme: light">-->
     <script>
         function mainplanedozoom(X) {
             zoomg = document.getElementById('mainplanezoom');
-            zoomg.setAttribute('transform', "scale(" + (zoomg.getAttribute('transform').toString().match(/\(.*\)/).toString().replace(/[()]/g, "") * X) + ")")
+            zoomg.setAttribute('transform', "scale(" + (zoomg.getAttribute('transform').toString().match(/\(.*\)/).toString().replace(/[()]/g, "") * X) + ")");
         }
     </script>
 </head>
@@ -137,11 +59,98 @@
             <div id="editornav">
                 <button class="editornavzoom" onclick="mainplanedozoom(2);">+</button>
                 <button class="editornavzoom" onclick="mainplanedozoom(0.5);">-</button>
+                <svg id="editornavmovejoy">
+                    <circle cx="4em" cy="4em" r="2.4em" stroke-width="0.2em" stroke="var(--joy-outlinecolor)" fill-opacity="0"></circle>
+                    <circle id="editornavmovejoy-stick" r="1.5em" cx="4em" cy="4em" fill="var(--joy-stickcolor)"></circle>
+                </svg>
             </div>
         </div>
         <div id="editorlibrary">
 
         </div>
     </div>
+
+    <script>
+        var joy = document.getElementById("editornavmovejoy");
+        var stick = joy.getElementById("editornavmovejoy-stick");
+        var moveg = document.getElementById('mainplanemove');
+        stick.addEventListener("touchstart", down);
+        joy.addEventListener("touchmove", move);
+        joy.addEventListener("touchend", up);
+        stick.addEventListener("mousedown", down);
+        joy.addEventListener("mousemove", move);
+        joy.addEventListener("mouseup", up);
+        //joy.addEventListener("mouseout", up);
+
+        let stickSpeed = 0.05;
+
+        var calcStick = setInterval(function() {
+            if(onTouch) {
+                var movedstr = moveg.getAttribute('transform').toString().match(/\(.*\)/).toString().replace(/[()]/g, "").split(",");
+                var fx = parseFloat(movedstr[0].trim());
+                var fy = parseFloat(movedstr[1].trim());
+                var dx = Math.cos(joytheta) * joyr * stickSpeed;
+                var dy = Math.sin(joytheta) * joyr * stickSpeed;
+                //console.log(fx, dx, fy, dy);
+                moveg.setAttribute('transform', "translate(" + (fx + dx) + ", " + (fy + dy) + ")");
+            }
+        }, 50/3);
+
+        var joyr, joytheta;
+
+        var onTouch = false;
+
+        function doStick(event) {
+            let position = joy.getBoundingClientRect();
+            let x = event.clientX - position.x;
+            let y = event.clientY - position.y;
+            joyx = x - position.width / 2;
+            joyy = y - position.height / 2;
+
+            if(joyx > 0) {
+                joytheta = Math.atan(joyy / joyx);
+            } else if(joyx < 0) {
+                if(joyy >= 0) {
+                    joytheta = Math.atan(joyy / joyx) + Math.PI;
+                } else {
+                    joytheta = Math.atan(joyy / joyx) - Math.PI;
+                }
+            } else {
+                if(joyy > 0) {
+                    joytheta = Math.PI / 2;
+                } else if(joyy < 0) {
+                    joytheta = (-1) * Math.PI / 2;
+                } else {
+                    joyr = 0;
+                }
+            }
+
+            joyr = Math.min(Math.sqrt(joyx * joyx + joyy * joyy), Math.sqrt((position.width / 2) * (position.width / 2) + (position.height / 2) * (position.height / 2)) / 8 * 2.5);
+
+            stick.setAttribute("cx", (Math.cos(joytheta) * joyr + position.width / 2) + "px");
+            stick.setAttribute("cy", (Math.sin(joytheta) * joyr + position.height / 2) + "px");
+            console.log(joytheta, joyr);
+        }
+
+        function down(event) {
+            onTouch = true;
+            stick.setAttribute("fill", "var(--joy-selectcolor)");
+            doStick(event);
+        }
+
+        function move(event) {
+            if(onTouch) {
+                doStick(event);
+            }
+        }
+
+        function up() {
+            onTouch = false;
+            stick.setAttribute("fill", "var(--joy-stickcolor)");
+            stick.setAttribute("cx", "4em");
+            stick.setAttribute("cy", "4em");
+            joyr = 0;
+        }
+    </script>
 </body>
 </html>
